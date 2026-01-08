@@ -57,6 +57,8 @@ Examples: `feature-payment`, `feature-auth`, `feature-notifications`
 
 ### 2.3 Initialize Status
 
+Use template from `templates/uow/status.yaml`:
+
 ```yaml
 id: {uow-id}
 status: DRAFT

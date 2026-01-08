@@ -1,0 +1,18 @@
+# UOW Status Template
+# Copy to: .airsspec/uow/{uow-id}/status.yaml
+
+id: uow-{name}
+status: DRAFT  # DRAFT | PLANNED | IN_PROGRESS | BLOCKED | COMPLETED | ARCHIVED
+created_at: <ISO-8601>
+updated_at: <ISO-8601>
+
+# Progress tracking
+progress:
+  total_bolts: 0
+  completed_bolts: 0
+
+# Optional metadata
+metadata:
+  author: <author>
+  priority: medium  # low | medium | high | critical
+  labels: []

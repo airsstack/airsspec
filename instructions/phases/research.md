@@ -93,6 +93,9 @@ Write `uow/{uow-id}/requirements.md` with required structure.
 .airsspec/uow/{uow-id}/requirements.md
 ```
 
+### Template
+Use the template from `templates/uow/requirements.md`.
+
 ### Structure
 
 ```markdown

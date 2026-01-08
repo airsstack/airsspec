@@ -97,6 +97,9 @@ Create an ADR for each major decision:
 ...
 ```
 
+### Template
+Use the template from `templates/uow/ADR.md`.
+
 ### Structure (MADR Format)
 
 ```markdown

@@ -100,6 +100,12 @@ For each Plan, create a corresponding Task that will track execution.
 .airsspec/uow/{uow-id}/RFC.md
 ```
 
+### Templates
+- RFC: `templates/uow/RFC.md`
+- Bolt status: `templates/bolt/status.yaml`
+- Plans: `templates/bolt/PLAN.md`
+- Tasks: `templates/bolt/TASK.md`
+
 ### RFC Structure
 
 ```markdown

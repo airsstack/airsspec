@@ -103,6 +103,9 @@ Write `uow/{uow-id}/DAA.md` with required structure.
 .airsspec/uow/{uow-id}/DAA.md
 ```
 
+### Template
+Use the template from `templates/uow/DAA.md`.
+
 ### Structure
 
 ```markdown

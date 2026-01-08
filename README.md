@@ -1,10 +1,36 @@
 # AirsSpec
 
-**Knowledge-Grounded, Spec-Driven Development Framework**
+**The Agentic Spec-Driven Development Framework**
 
 AirsSpec is a unified framework for **Research-Driven Development**. It bridges the gap between high-level knowledge synthesis (inspired by Google NotebookLM) and low-level execution (inspired by Spec Kit and OpenSpec).
 
 It serves as the **technical engine** for the [**AirSDLC Methodology**](AIRSDLC.md), orchestrating the entire lifecycle through the **Model Context Protocol (MCP)**.
+
+---
+
+## 🤖 What Makes AirsSpec Different?
+
+AirsSpec is an **Agentic Spec Framework** — it doesn't just define specifications, it **executes them through AI agents**.
+
+| Framework | Approach | Agent Integration |
+|-----------|----------|-------------------|
+| **GitHub SpecKit** | Spec templates for human developers | Passive (specs read by humans) |
+| **OpenSpec** | Structured specs for AI context | Passive (specs fed to AI) |
+| **AirsSpec** | Agentic spec-driven lifecycle | **Active (agents orchestrate specs)** |
+
+### Key Differentiators
+
+1. **Agentic Execution**: Specs aren't just documentation — they're executable contracts that AI agents actively follow through a 6-phase lifecycle.
+
+2. **Phase-Locked Agents**: Each phase has specialized agents with constrained tools (Cognitive Cleanroom), preventing context pollution.
+
+3. **Filesystem as Truth**: All state lives on disk in `.airsspec/`. The TUI/CLI is just a view — agents work directly with artifacts.
+
+4. **Gate-Based Progression**: Human approval gates between phases ensure AI proposals are validated before execution.
+
+5. **Self-Orchestrating**: AirsSpec agents can invoke other agents, creating a coordinated multi-agent workflow.
+
+---
 
 ## 🚀 Vision
 
@@ -63,6 +89,9 @@ airsspec/
 │   ├── core/               # Foundation & setup
 │   ├── phases/             # Phase-specific guides
 │   └── workflows/          # End-to-end workflows
+├── templates/               # Artifact templates
+│   ├── uow/                # UOW artifacts (requirements, DAA, ADR, RFC)
+│   └── bolt/               # Bolt artifacts (PLAN, TASK)
 ├── .opencode/agent/        # OpenCode custom agents
 ├── .agent/workflows/       # AntiGravity workflows
 └── AGENTS.md               # Agent instructions (cross-platform)

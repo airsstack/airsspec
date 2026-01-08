@@ -1,0 +1,16 @@
+# Bolt Status Template
+# Copy to: .airsspec/uow/{uow-id}/bolts/{bolt-id}/status.yaml
+
+id: bolt-{name}
+parent_uow: {uow-id}
+status: PENDING  # PENDING | IN_PROGRESS | COMPLETED | BLOCKED
+created_at: <ISO-8601>
+updated_at: <ISO-8601>
+
+# Progress tracking
+progress:
+  total_tasks: 0
+  completed_tasks: 0
+
+# Dependencies on other bolts
+depends_on: []

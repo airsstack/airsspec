@@ -46,6 +46,8 @@ AirsSpec implements a **6-phase AI Development Lifecycle**:
 
 Each phase has **gate conditions** that must be satisfied before proceeding.
 
+> 🐕 **Dogfooding**: AirsSpec uses its own workflows to develop itself. The framework is built using the same AI-DLC phases and agent integrations it provides.
+
 ---
 
 ## 📂 Project Structure

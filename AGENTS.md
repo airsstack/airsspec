@@ -26,12 +26,29 @@ airsspec/
 └── .airsspec/              # Workspace (when initialized)
 ```
 
+## Mandatory Reference Documents
+
+> **IMPORTANT**: All agents MUST read these documents before proceeding with any instruction.
+
+| Document | Purpose |
+|----------|---------|
+| [`instructions/core/path-variables.md`](instructions/core/path-variables.md) | Path variable definitions and reference priority rule |
+| [`instructions/core/prompt-guidelines.md`](instructions/core/prompt-guidelines.md) | Prompt engineering guidelines and instruction template |
+
+These foundational documents define:
+- All path variables (`$WORKSPACE_ROOT`, `$AIRSSPEC_PATH`, `$INSTRUCTIONS_SOURCE`, etc.)
+- Reference priority rule (project-local vs upstream instructions)
+- 8 core prompt engineering principles
+- Required instruction structure with XML sections
+
 ## Key Documentation
 
 | File | Purpose |
 |------|---------|
 | `instructions/README.md` | Main instruction overview |
 | `instructions/core/README.md` | Agent entrypoint |
+| `instructions/core/path-variables.md` | **MANDATORY** — Path variables |
+| `instructions/core/prompt-guidelines.md` | **MANDATORY** — Prompt guidelines |
 | `docs/ai-dlc-phases.md` | 6-phase lifecycle |
 | `docs/uow-bolt-spec.md` | UOW & Bolt architecture |
 | `docs/user-journey-and-workflow.md` | User experience flow |
@@ -81,10 +98,12 @@ Types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`
 
 ## Working on This Project
 
-1. Start with `instructions/core/README.md` for orientation
-2. Follow `instructions/core/philosophy.md` for principles
-3. Use workflows from `instructions/workflows/` for tasks
-4. Reference phase guides in `instructions/phases/` for details
+1. **READ** `instructions/core/path-variables.md` — Understand path variables
+2. **READ** `instructions/core/prompt-guidelines.md` — Understand instruction format
+3. Start with `instructions/core/README.md` for orientation
+4. Follow `instructions/core/philosophy.md` for principles
+5. Use workflows from `instructions/workflows/` for tasks
+6. Reference phase guides in `instructions/phases/` for details
 
 ## Testing
 

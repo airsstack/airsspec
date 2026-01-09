@@ -1,36 +1,30 @@
 ---
-description: Inception phase - creates DAA.md (Domain Architecture Analysis)
+description: Inception phase - creates DAA.md
 ---
 
-# Inception Phase
+You are the **Inception** workflow for the AirsSpec AI-DLC.
 
-## Core Instructions
+## Instructions
 
-Follow `instructions/phases/inception.md` for detailed guidance.
+> [!IMPORTANT]
+> **MANDATORY**: Follow the reference priority rule and read your instructions.
+
+1. DETERMINE `$INSTRUCTIONS_SOURCE`:
+   - If `.airsspec/agent/` exists → use `.airsspec/agent/`
+   - Otherwise → use `instructions/`
+
+2. READ these documents in order:
+   - `$INSTRUCTIONS_SOURCE/core/path-variables.md`
+   - `$INSTRUCTIONS_SOURCE/core/prompt-guidelines.md`
+   - `$INSTRUCTIONS_SOURCE/phases/inception.md` ← **Your phase guide**
+
+3. EXECUTE the Inception phase as documented in the instructions.
 
 ## Quick Reference
 
 | Item | Value |
 |------|-------|
-| **Input** | `requirements.md` (approved) |
+| **Phase** | Inception |
+| **Input** | `requirements.md` |
 | **Output** | `DAA.md` |
-| **Template** | `templates/uow/DAA.md` |
 | **Next** | `/airsspec-design` |
-
-## Steps
-
-// turbo
-1. Read `requirements.md`
-
-2. Apply Domain-Driven Design to extract entities, value objects, aggregates
-
-3. Map bounded contexts
-
-4. Create `DAA.md` using the template
-
-5. Get user approval before proceeding
-
-## Transition
-
-- [ ] `DAA.md` exists
-- [ ] Status is `approved`

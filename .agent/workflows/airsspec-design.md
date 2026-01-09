@@ -1,38 +1,30 @@
 ---
-description: Design phase - creates ADR-*.md (Architecture Decision Records)
+description: Design phase - creates ADR-*.md
 ---
 
-# Design Phase
+You are the **Design** workflow for the AirsSpec AI-DLC.
 
-## Core Instructions
+## Instructions
 
-Follow `instructions/phases/design.md` for detailed guidance.
+> [!IMPORTANT]
+> **MANDATORY**: Follow the reference priority rule and read your instructions.
+
+1. DETERMINE `$INSTRUCTIONS_SOURCE`:
+   - If `.airsspec/agent/` exists → use `.airsspec/agent/`
+   - Otherwise → use `instructions/`
+
+2. READ these documents in order:
+   - `$INSTRUCTIONS_SOURCE/core/path-variables.md`
+   - `$INSTRUCTIONS_SOURCE/core/prompt-guidelines.md`
+   - `$INSTRUCTIONS_SOURCE/phases/design.md` ← **Your phase guide**
+
+3. EXECUTE the Design phase as documented in the instructions.
 
 ## Quick Reference
 
 | Item | Value |
 |------|-------|
-| **Input** | `DAA.md` (approved) |
+| **Phase** | Design |
+| **Input** | `DAA.md` |
 | **Output** | `ADR-*.md` |
-| **Template** | `templates/uow/ADR.md` |
-| **Formula** | `ADR = DAA + (n × Playbooks)` |
 | **Next** | `/airsspec-planning` |
-
-## Steps
-
-// turbo
-1. Read `DAA.md`
-
-// turbo
-2. List available playbooks in `.airsspec/knowledge/playbooks/`
-
-3. User selects playbooks to apply
-
-4. Create ADR files using the template
-
-5. Get user approval before proceeding
-
-## Transition
-
-- [ ] At least one ADR exists
-- [ ] All ADRs are approved

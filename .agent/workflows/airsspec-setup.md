@@ -4,136 +4,31 @@ description: Setup workflow - bootstraps .airsspec workspace structure
 
 You are the **Setup** workflow for the AirsSpec AI-DLC.
 
-<purpose>
-Bootstrap the `.airsspec/` workspace directory structure for a project.
-</purpose>
+## Instructions
 
-<references>
-MANDATORY: Read these documents before proceeding.
-- Determine `$INSTRUCTIONS_SOURCE` using the reference priority rule below
-- Read `$INSTRUCTIONS_SOURCE/core/path-variables.md` for path variable definitions
-- Read `$INSTRUCTIONS_SOURCE/core/prompt-guidelines.md` for instruction format guidelines
-</references>
+> [!IMPORTANT]
+> **MANDATORY**: Follow the reference priority rule and read your instructions.
 
-<path_variables>
-$WORKSPACE_ROOT       = Current working directory
-$AIRSSPEC_PATH        = $WORKSPACE_ROOT/.airsspec
-$PROJECT_AGENT_PATH   = $AIRSSPEC_PATH/agent
-$CORE_INSTRUCTIONS_PATH = $WORKSPACE_ROOT/instructions
+1. DETERMINE `$INSTRUCTIONS_SOURCE`:
+   - If `.airsspec/agent/` exists → use `.airsspec/agent/`
+   - Otherwise → use `instructions/`
 
-Reference Priority:
-IF $PROJECT_AGENT_PATH exists:
-    $INSTRUCTIONS_SOURCE = $PROJECT_AGENT_PATH
-ELSE:
-    $INSTRUCTIONS_SOURCE = $CORE_INSTRUCTIONS_PATH
-</path_variables>
+2. READ these documents in order:
+   - `$INSTRUCTIONS_SOURCE/core/path-variables.md`
+   - `$INSTRUCTIONS_SOURCE/core/prompt-guidelines.md`
+   - `$INSTRUCTIONS_SOURCE/core/workspace-explore.md`
+   - `$INSTRUCTIONS_SOURCE/core/workspace-setup.md`
 
-## Steps
+3. EXECUTE the workspace setup as documented.
 
-1. Determine instruction source using reference priority rule
-   // turbo
-
-2. READ `$INSTRUCTIONS_SOURCE/core/workspace-explore.md`
-   // turbo
-   Execute the workspace exploration steps to generate WORKSPACE.md content.
-
-3. READ `$INSTRUCTIONS_SOURCE/core/workspace-setup.md`
-   // turbo
-   Execute the workspace setup steps to create the directory structure.
-
-4. Copy instruction files to enable project-local customization:
+4. COPY instruction files to enable project-local customization:
    // turbo
    ```bash
-   mkdir -p $PROJECT_AGENT_PATH
-   cp -r $CORE_INSTRUCTIONS_PATH/core/ $PROJECT_AGENT_PATH/core/
-   cp -r $CORE_INSTRUCTIONS_PATH/phases/ $PROJECT_AGENT_PATH/phases/
-   cp -r $CORE_INSTRUCTIONS_PATH/workflows/ $PROJECT_AGENT_PATH/workflows/
+   mkdir -p .airsspec/agent
+   cp -r instructions/core/ .airsspec/agent/core/
+   cp -r instructions/phases/ .airsspec/agent/phases/
+   cp -r instructions/workflows/ .airsspec/agent/workflows/
    ```
-
-5. Create `$AIRSSPEC_PATH/.gitignore` with workspace-specific patterns:
-   // turbo
-   ```gitignore
-   # AirsSpec Workspace - Ephemeral Files
-   knowledge/vectors/
-   contexts/agent/
-   sources/*.pdf
-   sources/*.docx
-   ```
-
-6. Create `$PROJECT_AGENT_PATH/README.md` explaining customization
-   // turbo
-
-7. Verify the structure exists:
-   // turbo
-   List contents of `$AIRSSPEC_PATH/` to confirm setup.
-
-<tools>
-<allowed>
-| Tool | Use Case |
-|------|----------|
-| `read_file` | Read instruction files, existing documentation |
-| `write_file` | Create workspace files and directories |
-| `list_dir` | Explore project structure |
-| `run_command` | Execute mkdir, cp commands for setup |
-</allowed>
-</tools>
-
-<when_uncertain>
-If the project structure is unclear or existing `.airsspec/` content conflicts:
-1. HALT and ASK the user how to proceed
-2. Options: Overwrite, Merge, or Cancel
-
-Do not assume — ask.
-</when_uncertain>
-
-## Expected Output
-
-```
-$AIRSSPEC_PATH/
-├── .gitignore                # Workspace-specific ignores
-├── WORKSPACE.md              # Project metadata
-├── airsspec.toml             # Configuration
-├── README.md                 # Workspace guide
-├── agent/                    # Project-local instructions
-│   ├── README.md             # Customization guide
-│   ├── core/                 # Copied from instructions/core/
-│   ├── phases/               # Copied from instructions/phases/
-│   └── workflows/            # Copied from instructions/workflows/
-├── sources/                  # Raw knowledge sources
-├── knowledge/
-│   ├── library/              # Warm memory
-│   ├── playbooks/            # Reusable patterns
-│   └── vectors/              # Cold memory (gitignored)
-├── contexts/
-│   └── agent/                # Session logs (gitignored)
-└── uow/                      # Units of Work
-```
-
-<output>
-<required>
-| Artifact | Path |
-|----------|------|
-| Workspace metadata | `$AIRSSPEC_PATH/WORKSPACE.md` |
-| Configuration | `$AIRSSPEC_PATH/airsspec.toml` |
-| Agent instructions | `$PROJECT_AGENT_PATH/` (complete copy) |
-| Workspace gitignore | `$AIRSSPEC_PATH/.gitignore` |
-| Customization guide | `$PROJECT_AGENT_PATH/README.md` |
-</required>
-
-<validation>
-- [ ] `$AIRSSPEC_PATH/` directory exists
-- [ ] `$AIRSSPEC_PATH/WORKSPACE.md` exists with project metadata
-- [ ] `$AIRSSPEC_PATH/airsspec.toml` exists with configuration
-- [ ] `$PROJECT_AGENT_PATH/core/` contains instruction files
-- [ ] `$PROJECT_AGENT_PATH/phases/` contains phase instructions
-- [ ] `$PROJECT_AGENT_PATH/workflows/` contains workflow instructions
-- [ ] `$AIRSSPEC_PATH/.gitignore` exists
-- [ ] `$AIRSSPEC_PATH/sources/` directory exists
-- [ ] `$AIRSSPEC_PATH/knowledge/` directory structure exists
-- [ ] `$AIRSSPEC_PATH/uow/` directory exists
-- [ ] `$AIRSSPEC_PATH/contexts/` directory exists
-</validation>
-</output>
 
 ## Quick Reference
 
@@ -141,11 +36,4 @@ $AIRSSPEC_PATH/
 |------|-------|
 | **Phase** | Setup (Pre-workflow) |
 | **Output** | Complete `.airsspec/` directory structure |
-| **Next** | Ready for `/airsspec-feature` or `/airsspec-hotfix` |
-
-## Next Steps
-
-After setup is complete:
-- Add source documents to `$SOURCES_PATH/`
-- Add playbooks to `$PLAYBOOKS_PATH/`
-- Run `/airsspec-feature` or `/airsspec-hotfix` to start work
+| **Next** | `/airsspec-feature` or `/airsspec-hotfix` |

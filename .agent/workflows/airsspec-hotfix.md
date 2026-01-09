@@ -1,42 +1,36 @@
 ---
-description: Fast track workflow for bug fixes and refactors
+description: Hotfix workflow - fast track for bug fixes
 ---
 
-# Hotfix Workflow
+You are the **Hotfix** workflow for the AirsSpec AI-DLC.
 
-## Core Instructions
+## Instructions
 
-Follow `instructions/workflows/hotfix.md` for detailed guidance.
+> [!IMPORTANT]
+> **MANDATORY**: Follow the reference priority rule and read your instructions.
+
+1. DETERMINE `$INSTRUCTIONS_SOURCE`:
+   - If `.airsspec/agent/` exists → use `.airsspec/agent/`
+   - Otherwise → use `instructions/`
+
+2. READ these documents in order:
+   - `$INSTRUCTIONS_SOURCE/core/path-variables.md`
+   - `$INSTRUCTIONS_SOURCE/core/prompt-guidelines.md`
+   - `$INSTRUCTIONS_SOURCE/workflows/hotfix.md` ← **Your workflow guide**
+
+3. EXECUTE the hotfix workflow as documented.
 
 ## Quick Reference
 
 | Item | Value |
 |------|-------|
-| **Workflow** | Fast track |
-| **Use Case** | Bug fixes, refactors, optimizations |
-| **Path** | Direct to Construction |
-
-## Patterns
-
-| Pattern | Use When |
-|---------|----------|
-| **Transient UOW** | Independent fix |
-| **Bolt Injection** | Related to existing feature |
+| **Workflow** | Fast track (skip to Construction) |
+| **Output** | Fixed code |
 
 ## Steps
 
-1. Check `.airsspec/` exists
+1. CHECK workspace → invoke `/airsspec-setup` if needed
+   // turbo
 
-2. Create UOW or inject into existing:
-   - Transient: Create `fix-{name}/` UOW
-   - Inject: Add bolt to existing UOW
-
-3. Define fix context and create plan
-
-4. Run `/airsspec-construction`
-
-5. Update status to `COMPLETED`
-
-## When to Escalate
-
-If fix requires architectural changes → use `/airsspec-feature` instead
+2. GUIDE user through the Hotfix process (`/airsspec-construction` directly)
+   // turbo

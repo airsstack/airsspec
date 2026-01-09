@@ -1,8 +1,8 @@
 # Path Variables Reference
 
-<purpose>
+## Purpose
+
 Single source of truth for all path variables used throughout AirsSpec instructions and guidelines.
-</purpose>
 
 > [!IMPORTANT]
 > **MANDATORY REFERENCE**: All instructions, guidelines, agents, and workflows MUST reference this document before using any file paths.
@@ -63,7 +63,6 @@ Single source of truth for all path variables used throughout AirsSpec instructi
 
 ## Reference Priority Rule
 
-<rule>
 When resolving instruction paths, apply this priority:
 
 ```
@@ -72,7 +71,6 @@ IF $PROJECT_AGENT_PATH exists:
 ELSE:
     $INSTRUCTIONS_SOURCE = $CORE_INSTRUCTIONS_PATH
 ```
-</rule>
 
 ### Why This Matters
 
@@ -98,30 +96,28 @@ At runtime, resolve variables in this sequence:
 
 ### Correct Usage
 
-<correct>
 ```markdown
-<actions>
+## Steps
+
 1. READ philosophy from `$INSTRUCTIONS_SOURCE/core/philosophy.md`
 2. CREATE requirements at `$UOW_PATH/{uow-id}/requirements.md`
 3. WRITE session log to `$SESSION_PATH/{session-id}.jsonl`
-</actions>
 ```
-</correct>
 
 ### Incorrect Usage
 
-<incorrect>
 ```markdown
 ## Steps
+
 1. Read `instructions/core/philosophy.md`
 2. Create `.airsspec/uow/{id}/requirements.md`
 ```
 
-**Problems:**
-- Hardcoded paths don't respect reference priority
-- No variable substitution = fragile references
-- Inconsistent with project-local customization
-</incorrect>
+> [!WARNING]
+> **Problems with hardcoded paths:**
+> - Hardcoded paths don't respect reference priority
+> - No variable substitution = fragile references
+> - Inconsistent with project-local customization
 
 ---
 

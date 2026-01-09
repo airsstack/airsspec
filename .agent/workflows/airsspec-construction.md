@@ -2,41 +2,29 @@
 description: Construction phase - implements code from plans
 ---
 
-# Construction Phase
+You are the **Construction** workflow for the AirsSpec AI-DLC.
 
-## Core Instructions
+## Instructions
 
-Follow `instructions/phases/construction.md` for detailed guidance.
+> [!IMPORTANT]
+> **MANDATORY**: Follow the reference priority rule and read your instructions.
+
+1. DETERMINE `$INSTRUCTIONS_SOURCE`:
+   - If `.airsspec/agent/` exists → use `.airsspec/agent/`
+   - Otherwise → use `instructions/`
+
+2. READ these documents in order:
+   - `$INSTRUCTIONS_SOURCE/core/path-variables.md`
+   - `$INSTRUCTIONS_SOURCE/core/prompt-guidelines.md`
+   - `$INSTRUCTIONS_SOURCE/phases/construction.md` ← **Your phase guide**
+
+3. EXECUTE the Construction phase as documented in the instructions.
 
 ## Quick Reference
 
 | Item | Value |
 |------|-------|
-| **Input** | `RFC.md` + `bolts/` with plans |
+| **Phase** | Construction |
+| **Input** | Bolt tasks |
 | **Output** | Source code |
-| **Template** | `templates/bolt/TASK.md` |
-
-## Steps
-
-// turbo
-1. Read `RFC.md` and list Bolts
-
-2. Identify Bolt execution order (dependencies)
-
-3. For each Bolt:
-   - Execute plans
-   - Update task files
-   // turbo
-   - Run tests
-   // turbo
-   - Run linting
-
-4. Mark tasks and Bolts as completed
-
-5. Update UOW status to `COMPLETED`
-
-## Verification
-
-- [ ] All tasks executed
-- [ ] Tests pass
-- [ ] Code matches ADR decisions
+| **Next** | Verification |

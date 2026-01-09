@@ -2,34 +2,28 @@
 description: Research phase - creates requirements.md
 ---
 
-# Research Phase
+You are the **Research** workflow for the AirsSpec AI-DLC.
 
-## Core Instructions
+## Instructions
 
-Follow `instructions/phases/research.md` for detailed guidance.
+> [!IMPORTANT]
+> **MANDATORY**: Follow the reference priority rule and read your instructions.
+
+1. DETERMINE `$INSTRUCTIONS_SOURCE`:
+   - If `.airsspec/agent/` exists → use `.airsspec/agent/`
+   - Otherwise → use `instructions/`
+
+2. READ these documents in order:
+   - `$INSTRUCTIONS_SOURCE/core/path-variables.md`
+   - `$INSTRUCTIONS_SOURCE/core/prompt-guidelines.md`
+   - `$INSTRUCTIONS_SOURCE/phases/research.md` ← **Your phase guide**
+
+3. EXECUTE the Research phase as documented in the instructions.
 
 ## Quick Reference
 
 | Item | Value |
 |------|-------|
+| **Phase** | Research |
 | **Output** | `requirements.md` |
-| **Template** | `templates/uow/requirements.md` |
 | **Next** | `/airsspec-inception` |
-
-## Steps
-
-// turbo
-1. Review sources in `.airsspec/sources/`
-
-2. Clarify user intent (ask questions if vague)
-
-3. Research external information if needed
-
-4. Create `requirements.md` using the template
-
-5. Get user approval before proceeding
-
-## Transition
-
-- [ ] `requirements.md` exists
-- [ ] Status is `approved`

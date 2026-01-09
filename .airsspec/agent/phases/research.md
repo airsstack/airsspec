@@ -142,34 +142,10 @@ As a [user type], I want [goal] so that [benefit].
 
 ## Transition Criteria
 
-> [!IMPORTANT]
-> **HALT AND WAIT FOR USER APPROVAL**
-
-After creating `requirements.md`, you MUST:
-
-1. **STOP** execution immediately - do not proceed to Inception
-2. **PRESENT** the requirements to the user with a summary:
-   - Problem statement
-   - Success criteria
-   - Scope (in/out)
-   - Any open questions
-3. **ASK** for explicit approval with clear instructions:
-   > "I have created `requirements.md` for this UOW.
-   >
-   > **Summary:**
-   > - Problem: {1-2 sentence summary}
-   > - Success Criteria: {count} criteria
-   > - In Scope: {count} items
-   >
-   > **Review the full document at:** `.airsspec/uow/{uow-id}/requirements.md`
-   >
-   > **Do you approve these requirements?** (yes/no/changes)"
-4. **WAIT** for user response before proceeding
-
-Proceed to **Inception** phase ONLY when:
+Proceed to **Inception** phase when:
 - [ ] `requirements.md` exists in the UOW directory
-- [ ] User has explicitly approved (you received "yes" or similar)
-- [ ] No critical open questions remain blocking the work
+- [ ] Requirements status is `approved` (user has reviewed)
+- [ ] No critical open questions remain
 
 ---
 
@@ -184,4 +160,3 @@ Proceed to **Inception** phase ONLY when:
 2. **Be specific**: Vague requirements lead to vague implementations
 3. **Link sources**: Every claim should trace to a source
 4. **Keep scope tight**: Better to build less well than more poorly
-5. **ALWAYS HALT**: Never proceed to Inception without explicit user approval ✋

@@ -2,6 +2,17 @@
 
 A step-by-step guide for implementing new features using the complete AI-DLC lifecycle.
 
+> [!IMPORTANT]
+> **Human-in-the-Loop Enforcement**
+>
+> This workflow includes **mandatory HALT points** after each artifact generation. The agent MUST stop and wait for explicit user approval before proceeding to the next phase. This enforces the "Trust But Verify" principle of AI-DLC.
+>
+> **Halt Points**:
+> - After `requirements.md` → wait for approval → proceed to Inception
+> - After `DAA.md` → wait for approval → proceed to Design
+> - After `ADR-*.md` → wait for approval → proceed to Planning
+> - After `RFC.md` + `bolts/` → wait for approval → proceed to Construction
+
 ---
 
 ## When to Use
@@ -104,10 +115,35 @@ progress:
 .airsspec/uow/{uow-id}/requirements.md
 ```
 
-### Gate
+### Gate - CRITICAL HALT POINT
+
+> [!IMPORTANT]
+> **HALT AND WAIT FOR USER APPROVAL**
+
+After creating `requirements.md`, you MUST:
+
+1. **STOP** execution immediately
+2. **PRESENT** the requirements to the user:
+   - Summary of the problem statement
+   - Key requirements list
+   - Success criteria
+   - Scope (in/out)
+3. **ASK** for explicit approval:
+   > "I have created `requirements.md` for this UOW. Please review:
+   > - Path: `.airsspec/uow/{uow-id}/requirements.md`
+   >
+   > Do you approve these requirements? (yes/no/changes)"
+
+4. **WAIT** for user response before proceeding:
+   - If `yes` → Update `status.yaml: status: PLANNED` and proceed to Inception
+   - If `no` or `changes` → Ask for feedback, revise, then repeat
+
+**Do NOT proceed to Inception until you have explicit user approval.**
+
+**Verification**:
 - [ ] `requirements.md` exists
-- [ ] User approves requirements
-- [ ] Update `status.yaml`: `status: PLANNED`
+- [ ] User has explicitly approved (you must receive "yes" or similar)
+- [ ] `status.yaml` updated to: `status: PLANNED`
 
 ---
 
@@ -127,10 +163,35 @@ progress:
 .airsspec/uow/{uow-id}/DAA.md
 ```
 
-### Gate
+### Gate - CRITICAL HALT POINT
+
+> [!IMPORTANT]
+> **HALT AND WAIT FOR USER APPROVAL**
+
+After creating `DAA.md`, you MUST:
+
+1. **STOP** execution immediately
+2. **PRESENT** the DAA to the user:
+   - Summary of domain concepts identified
+   - Key entities and value objects
+   - Bounded contexts mapped
+   - Ubiquitous language definitions
+3. **ASK** for explicit approval:
+   > "I have created `DAA.md` for this UOW. Please review:
+   > - Path: `.airsspec/uow/{uow-id}/DAA.md`
+   >
+   > Do you approve this Domain Architecture Analysis? (yes/no/changes)"
+
+4. **WAIT** for user response before proceeding:
+   - If `yes` → Update `status.yaml: status: PLANNED` and proceed to Design
+   - If `no` or `changes` → Ask for feedback, revise, then repeat
+
+**Do NOT proceed to Design until you have explicit user approval.**
+
+**Verification**:
 - [ ] `DAA.md` exists
-- [ ] User approves DAA
-- [ ] Update `status.yaml`: `status: PLANNED`
+- [ ] User has explicitly approved (you must receive "yes" or similar)
+- [ ] `status.yaml` updated to: `status: PLANNED`
 
 ---
 
@@ -151,10 +212,39 @@ progress:
 ...
 ```
 
-### Gate
+### Gate - CRITICAL HALT POINT
+
+> [!IMPORTANT]
+> **HALT AND WAIT FOR USER APPROVAL**
+
+After creating ADRs, you MUST:
+
+1. **STOP** execution immediately
+2. **PRESENT** each ADR to the user:
+   - For each ADR: Title, Context, Decision, Consequences
+   - Summary of decisions made
+   - Any trade-offs or alternatives considered
+3. **ASK** for explicit approval:
+   > "I have created {n} ADRs for this UOW. Please review:
+   > - Path: `.airsspec/uow/{uow-id}/ADR-*.md`
+   >
+   > ADRs created:
+   > - ADR-001: {topic}
+   > - ADR-002: {topic}
+   > - ...
+   >
+   > Do you approve these Architecture Decision Records? (yes/no/changes)"
+
+4. **WAIT** for user response before proceeding:
+   - If `yes` → Update `status.yaml: status: PLANNED` and proceed to Planning
+   - If `no` or `changes` → Ask for feedback, revise, then repeat
+
+**Do NOT proceed to Planning until you have explicit user approval.**
+
+**Verification**:
 - [ ] At least one ADR exists
-- [ ] All ADRs approved
-- [ ] Update `status.yaml`: `status: PLANNED`
+- [ ] User has explicitly approved all ADRs (you must receive "yes" or similar)
+- [ ] `status.yaml` updated to: `status: PLANNED`
 
 ---
 
@@ -182,10 +272,41 @@ progress:
 │   └── ...
 ```
 
-### Gate
-- [ ] `RFC.md` exists and is approved
-- [ ] All Bolts have plans and tasks
-- [ ] Update `status.yaml`: `status: IN_PROGRESS`
+### Gate - CRITICAL HALT POINT
+
+> [!IMPORTANT]
+> **HALT AND WAIT FOR USER APPROVAL**
+
+After creating RFC.md and bolt plans, you MUST:
+
+1. **STOP** execution immediately
+2. **PRESENT** the RFC and bolt structure to the user:
+   - Summary of implementation strategy from RFC
+   - List of Bolts created
+   - For each Bolt: brief description, number of plans/tasks
+3. **ASK** for explicit approval:
+   > "I have created the RFC and bolt plans for this UOW. Please review:
+   > - RFC Path: `.airsspec/uow/{uow-id}/RFC.md`
+   > - Bolts Path: `.airsspec/uow/{uow-id}/bolts/`
+   >
+   > Bolts created:
+   > - {bolt-1}: {description} ({n} plans, {n} tasks)
+   > - {bolt-2}: {description} ({n} plans, {n} tasks)
+   > - ...
+   >
+   > Do you approve the RFC and bolt plans? (yes/no/changes)"
+
+4. **WAIT** for user response before proceeding:
+   - If `yes` → Update `status.yaml: status: IN_PROGRESS` and proceed to Construction
+   - If `no` or `changes` → Ask for feedback, revise, then repeat
+
+**Do NOT proceed to Construction until you have explicit user approval.**
+
+**Verification**:
+- [ ] `RFC.md` exists and is complete
+- [ ] All Bolts have been created with plans and tasks
+- [ ] User has explicitly approved (you must receive "yes" or similar)
+- [ ] `status.yaml` updated to: `status: IN_PROGRESS`
 
 ---
 
@@ -243,19 +364,40 @@ foreach Bolt in bolts/ {
 
 ---
 
+## Resuming After User Approval
+
+When user provides approval to proceed to the next phase:
+
+1. **Update the status file**:
+   ```yaml
+   # .airsspec/uow/{uow-id}/status.yaml
+   status: PLANNED  # or IN_PROGRESS for post-RFC
+   phase: {current-phase}
+   ```
+
+2. **Confirm transition**:
+   > "Thank you for the approval. Proceeding to {next-phase} phase..."
+
+3. **Continue** with the next step in this workflow
+
+---
+
 ## Summary Checklist
 
-| Step | Phase | Artifact | Gate |
-|------|-------|----------|------|
+| Step | Phase | Artifact | Gate (HALT) |
+|------|-------|----------|-------------|
 | 1 | Setup | `.airsspec/` | Structure exists |
 | 2 | Init | `uow/{id}/` | UOW created |
 | 3 | Ingestion | Sources | Sources selected |
-| 4 | Research | `requirements.md` | Requirements approved |
-| 5 | Inception | `DAA.md` | DAA approved |
-| 6 | Design | `ADR-*.md` | ADRs approved |
-| 7 | Planning | `RFC.md`, `bolts/` | RFC approved |
+| 4 | Research | `requirements.md` | **HALT: User approves** ✋ |
+| 5 | Inception | `DAA.md` | **HALT: User approves** ✋ |
+| 6 | Design | `ADR-*.md` | **HALT: User approves** ✋ |
+| 7 | Planning | `RFC.md`, `bolts/` | **HALT: User approves** ✋ |
 | 8 | Construction | `src/*`, `tests/*` | All tasks done |
 | 9 | Complete | Archive | UOW completed |
+
+> [!NOTE]
+> ✋ = **HALT AND WAIT** for explicit user approval before proceeding
 
 ---
 

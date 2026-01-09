@@ -1,0 +1,19 @@
+# .airsspec/airsspec.toml
+
+[project]
+name = "airsspec"
+version = "0.1.0"
+
+[llm]
+provider = "anthropic"
+model = "claude-sonnet-4-20250514"
+
+[retry]
+max_llm_retries = 3
+max_tool_retries = 2
+backoff_base_ms = 500
+backoff_max_ms = 5000
+
+[memory]
+hot_window_size = 30
+compression_threshold = 0.8

@@ -164,33 +164,9 @@ created_at: <ISO-8601>
 
 ## Transition Criteria
 
-> [!IMPORTANT]
-> **HALT AND WAIT FOR USER APPROVAL**
-
-After creating `DAA.md`, you MUST:
-
-1. **STOP** execution immediately - do not proceed to Design
-2. **PRESENT** the DAA to the user with a summary:
-   - Domain model overview
-   - Bounded contexts identified
-   - Key entities and value objects
-   - Ubiquitous language terms
-3. **ASK** for explicit approval with clear instructions:
-   > "I have created `DAA.md` for this UOW.
-   >
-   > **Summary:**
-   > - Bounded Contexts: {count} contexts identified
-   > - Entities: {count} core entities
-   > - Value Objects: {count} value objects
-   >
-   > **Review the full document at:** `.airsspec/uow/{uow-id}/DAA.md`
-   >
-   > **Do you approve this Domain Architecture Analysis?** (yes/no/changes)"
-4. **WAIT** for user response before proceeding
-
-Proceed to **Design** phase ONLY when:
+Proceed to **Design** phase when:
 - [ ] `DAA.md` exists in the UOW directory
-- [ ] User has explicitly approved (you received "yes" or similar)
+- [ ] DAA status is `approved` (user has reviewed)
 - [ ] Domain model is coherent and complete
 
 ---
@@ -203,7 +179,6 @@ Proceed to **Design** phase ONLY when:
 ## Tips for Spec-Writers
 
 1. **Stay technology-agnostic**: No databases, no frameworks — just concepts
-2. **Use domain language**: Match to terminology users actually use
+2. **Use domain language**: Match the terminology users actually use
 3. **Draw boundaries clearly**: Contexts should have minimal overlap
 4. **Think in behaviors**: What can entities *do*, not just what they *are*
-5. **ALWAYS HALT**: Never proceed to Design without explicit user approval ✋

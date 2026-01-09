@@ -200,37 +200,8 @@ created_at: <ISO-8601>
 
 ## Transition Criteria
 
-> [!IMPORTANT]
-> **HALT AND WAIT FOR USER APPROVAL**
-
-After creating RFC.md and bolt plans, you MUST:
-
-1. **STOP** execution immediately - do not proceed to Construction
-2. **PRESENT** the RFC and bolt structure to the user with a summary:
-   - Implementation approach summary
-   - List of all Bolts created
-   - For each Bolt: brief description, plan count, task count
-3. **ASK** for explicit approval with clear instructions:
-   > "I have created the RFC and bolt plans for this UOW.
-   >
-   > **RFC Summary:**
-   > - {1-2 sentence summary of implementation approach}
-   >
-   > **Bolts Created:** {count} bolts
-   > - {bolt-1}: {description} ({n} plans, {n} tasks)
-   > - {bolt-2}: {description} ({n} plans, {n} tasks)
-   > - ...
-   >
-   > **Review at:**
-   > - RFC: `.airsspec/uow/{uow-id}/RFC.md`
-   > - Bolts: `.airsspec/uow/{uow-id}/bolts/`
-   >
-   > **Do you approve the RFC and bolt plans?** (yes/no/changes)"
-4. **WAIT** for user response before proceeding
-
-Proceed to **Construction** phase ONLY when:
-- [ ] `RFC.md` exists and is complete
-- [ ] User has explicitly approved (you received "yes" or similar)
+Proceed to **Construction** phase when:
+- [ ] `RFC.md` exists and is approved
 - [ ] At least one Bolt exists with plans
 - [ ] All plans have corresponding tasks
 - [ ] Dependencies are mapped
@@ -248,4 +219,3 @@ Proceed to **Construction** phase ONLY when:
 2. **Atomic plans**: Each plan should be completable in one session
 3. **Think verification**: Define "done" before starting
 4. **Anticipate blockers**: Identify risks upfront
-5. **ALWAYS HALT**: Never proceed to Construction without explicit user approval ✋

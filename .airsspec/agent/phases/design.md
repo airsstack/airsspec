@@ -143,32 +143,9 @@ Proposed | Accepted | Deprecated | Superseded
 
 ## Transition Criteria
 
-> [!IMPORTANT]
-> **HALT AND WAIT FOR USER APPROVAL**
-
-After creating ADRs, you MUST:
-
-1. **STOP** execution immediately - do not proceed to Planning
-2. **PRESENT** each ADR to the user with a summary:
-   - List of all ADRs created
-   - Key decisions made in each
-   - Trade-offs and alternatives considered
-3. **ASK** for explicit approval with clear instructions:
-   > "I have created {count} Architecture Decision Records (ADRs) for this UOW.
-   >
-   > **ADRs Created:**
-   > - ADR-001: {title} - {1-sentence summary}
-   > - ADR-002: {title} - {1-sentence summary}
-   > - ...
-   >
-   > **Review all ADRs at:** `.airsspec/uow/{uow-id}/ADR-*.md`
-   >
-   > **Do you approve these ADRs?** (yes/no/changes)"
-4. **WAIT** for user response before proceeding
-
-Proceed to **Planning** phase ONLY when:
+Proceed to **Planning** phase when:
 - [ ] At least one ADR exists
-- [ ] User has explicitly approved all ADRs (you received "yes" or similar)
+- [ ] All ADRs have status `accepted`
 - [ ] Technical decisions cover:
   - Architecture pattern
   - Data storage
@@ -187,4 +164,3 @@ Proceed to **Planning** phase ONLY when:
 2. **Reference playbooks**: Don't reinvent patterns; apply proven ones
 3. **Think about evolution**: How will this scale? How will it change?
 4. **Keep it immutable**: ADRs are not edited — superseded with new versions
-5. **ALWAYS HALT**: Never proceed to Planning without explicit user approval ✋

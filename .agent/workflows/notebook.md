@@ -11,7 +11,18 @@ Create a new journal entry documenting your development experiences, following t
 
 1. READ existing journals in `notebooks/` to understand the format and casual tone
 2. GENERATE a filename in the format: `YYYY-MM-DD-topic.md` (use today's date)
-3. CREATE the journal entry at `notebooks/{filename}`
+3. CREATE a journal entry at `notebooks/{filename}`
+4. **HALT** - Present entry and ask for approval:
+   > "✅ **Journal Entry Created**
+   >
+   > **File**: `notebooks/{filename}`
+   >
+   > **Preview**: {brief 1-2 sentence summary of entry content}
+   >
+   > **Do you approve this journal entry?** (yes/no/edit)"
+5. WAIT for user response before proceeding
+6. (Only if user approves) Entry is complete
+7. (If user says "edit") Ask for specific changes and regenerate
 
 ## Journal Format
 
@@ -67,7 +78,7 @@ Each journal entry MUST include these sections:
 ## Examples of Good Writing
 
 ✅ **Good**:
-"I was banging my head against the wall trying to figure out why..."
+"I was banging my head against a wall trying to figure out why..."
 
 "Here's what finally worked..."
 

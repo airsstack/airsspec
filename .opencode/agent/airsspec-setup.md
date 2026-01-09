@@ -21,10 +21,13 @@ You are the **Setup** agent for the AirsSpec AI-DLC.
 2. READ these documents in order:
    - `$INSTRUCTIONS_SOURCE/core/path-variables.md`
    - `$INSTRUCTIONS_SOURCE/core/prompt-guidelines.md`
+   - `$INSTRUCTIONS_SOURCE/core/philosophy.md`
    - `$INSTRUCTIONS_SOURCE/core/workspace-explore.md`
    - `$INSTRUCTIONS_SOURCE/core/workspace-setup.md`
 
 3. EXECUTE the workspace setup as documented.
+
+> **NOTE**: The workspace-setup.md instruction includes copying all instructions from `$INSTRUCTIONS_SOURCE` to `.airsspec/agent/`, following the reference priority rule to enable per-project customization.
 
 ## Quick Reference
 

@@ -44,13 +44,29 @@ Documents the migration from XML-style instruction formatting to pure Markdown, 
 #### [Syncing OpenCode and AntiGravity Agents](./2026-01-09-syncing-opencode-and-antigravity-agents.md)
 **Topic**: Agent Tool Customizations, Instructions Synchronization
 
-Describes the process of maintaining a single source of truth for agent instructions across two different AI coding platforms (OpenCode and AntiGravity). Introduces the reference priority rule and the concept of treating the filesystem as truth.
+Describes the process of maintaining a single source of truth for agent instructions across two different AI coding platforms (OpenCode and AntiGravity). Introduces to reference priority rule and to concept of treating the filesystem as truth.
 
 **Key Learnings**:
 - Establishing a reference priority rule allows per-project customization
 - Foundational reference documents prevent instruction drift across platforms
 - Explicit instructions work better than implicit ones for LLMs
 - "Cognitive Cleanroom" principle: agents need clear boundaries and phase-locked tool constraints
+
+### 2026-01-10
+
+#### [HALT Strategy Implementation](./2026-01-10-halt-strategy-implementation.md)
+**Topic**: Agent Orchestration, Human-in-the-Loop, Workflow Control
+
+Documents the implementation of explicit HALT points across all AirsSpec agents and workflows to enforce human-in-the-loop workflow and prevent AI agents from working on excessive context without user oversight.
+
+**Key Learnings**:
+- **Human-in-the-Loop is Critical**: Every major operation must have explicit approval points to prevent runaway AI execution
+- **Single Source of Truth**: Documentation in agent/workflow files themselves is better than separate summary files
+- **Standard HALT Pattern**: Present results → Ask approval → Wait for response → Handle (yes/no/changes)
+- **Context Growth Prevention**: Isolating phases with HALT points prevents context from accumulating across multiple steps
+- **Testing Validates Design**: Immediately testing after changes confirms HALT points work as intended
+
+**Files Changed**: 13 files modified (+665 lines), 2 redundant files removed
 
 ---
 

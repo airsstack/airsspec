@@ -61,12 +61,14 @@ These foundational documents define:
 - `/airsspec-hotfix` — Fast track for fixes
 - `/airsspec-setup` — Initialize workspace
 - `/git-commit` — Conventional Commits
+- `/notebook` — Create developer journal entries
 
 ### OpenCode (via `@agent`)
 - `@airsspec` — Main orchestrator
 - `@airsspec-feature` — Feature workflow
 - `@airsspec-hotfix` — Hotfix workflow
 - `@git-commit` — Commit helper
+- `@notebook` — Create developer journal entries
 
 ## Code Style
 
@@ -111,6 +113,60 @@ No automated tests yet. Verify changes by:
 - Reviewing markdown renders correctly
 - Checking cross-references between files
 - Validating YAML syntax in examples
+
+## Notebook Agent
+
+The **notebook** agent (`/notebook` or `@notebook`) creates developer journal entries documenting your experiences, learnings, and decisions throughout the development process.
+
+### Purpose
+
+Developer journals serve as:
+- **Learning Archive**: Capturing lessons learned from both successes and failures
+- **Decision History**: Documenting why certain architectural decisions were made
+- **Knowledge Sharing**: Making personal experiences available to other engineers
+- **Development Timeline**: Creating a chronological record of the project's evolution
+
+### Location
+
+Journals are stored in the `notebooks/` directory with the naming convention: `YYYY-MM-DD-topic.md`
+
+### Journal Format
+
+Each journal entry follows a consistent structure:
+
+```markdown
+# [Topic]
+
+**Date**: YYYY-MM-DD
+**Topic**: [Category]
+
+---
+
+## The Problem I Was Facing
+[Describe the problem in first-person]
+
+## What I Did
+[Explain the steps taken to solve the problem]
+
+## What I Learned
+[Share insights and lessons learned]
+
+## Files Changed
+[List files modified/created]
+
+## Next Steps
+[What to do next based on what was learned]
+```
+
+### Writing Style
+
+- **Casual tone**: Write as if talking to another developer over coffee
+- **First person**: Use "I", "me", "my" throughout
+- **Honest reflection**: Share both successes and failures
+- **Focus on learning**: The "What I Learned" section is the most valuable part
+- **Avoid hyperbole**: Keep it grounded and realistic. Don't overstate or exaggerate your experiences
+
+See `notebooks/README.md` for more details and examples of existing journals.
 
 ## Important Constraints
 

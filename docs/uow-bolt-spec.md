@@ -29,7 +29,8 @@ The architecture follows a strict 3-Layer Hierarchy:
 ├── status.yaml        # Lifecycle State
 ├── requirements.md    # The Goal (PRD/User Story)
 ├── DAA.md             # Domain Architecture Analysis
-├── ADR-*.md           # Architecture Decision Records
+├── adrs/              # Architecture Decision Records
+│   └── ADR-*.md
 ├── RFC.md             # Implementation Strategy
 └── bolts/             # Execution Modules
     ├── {BOLT_ID}/

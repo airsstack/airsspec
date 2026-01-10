@@ -298,33 +298,42 @@ Each Unit of Work maintains its own state file:
 
 ```
 .airsspec/uow/{uow-id}/
-├── state.json          # Current phase, transitions, timestamps
-├── PRD.md
+├── status.yaml         # Current phase, transitions, timestamps
+├── requirements.md
 ├── DAA.md
-├── ADR-001.md
+├── adrs/               # Architecture Decision Records
+│   ├── ADR-001.md
+│   └── ADR-002.md
 ├── RFC.md
 └── bolts/
     └── {bolt-id}/
-        ├── tasks/
-        └── plans/
+        ├── plans/
+        └── tasks/
 ```
 
-**State Schema**:
-```json
-{
-  "id": "feature-stripe-payments",
-  "phase": "DESIGN",
-  "created_at": "2026-01-05T20:00:00Z",
-  "updated_at": "2026-01-05T20:15:00Z",
-  "transitions": [
-    { "from": "IDLE", "to": "RESEARCH", "at": "..." },
-    { "from": "RESEARCH", "to": "INCEPTION", "at": "..." }
-  ],
-  "artifacts": {
-    "prd": { "path": "PRD.md", "status": "approved" },
-    "daa": { "path": "DAA.md", "status": "draft" }
-  }
-}
+**State Schema** (`status.yaml`):
+```yaml
+id: feature-stripe-payments
+phase: Design
+status: in-progress
+created_at: 2026-01-05T20:00:00Z
+updated_at: 2026-01-05T20:15:00Z
+
+artifacts:
+  requirements:
+    path: requirements.md
+    status: approved
+  daa:
+    path: DAA.md
+    status: draft
+
+transitions:
+  - from: Idle
+    to: Research
+    at: 2026-01-05T20:00:00Z
+  - from: Research
+    to: Inception
+    at: 2026-01-05T20:10:00Z
 ```
 
 ---
@@ -591,15 +600,16 @@ project/
 │   │
 │   └── uow/                      # Units of Work
 │       └── {uow-id}/
-│           ├── state.json
-│           ├── PRD.md
+│           ├── status.yaml
+│           ├── requirements.md
 │           ├── DAA.md
-│           ├── ADR-*.md
+│           ├── adrs/
+│           │   └── ADR-*.md
 │           ├── RFC.md
 │           └── bolts/
 │               └── {bolt-id}/
-│                   ├── tasks/
-│                   └── plans/
+│                   ├── plans/
+│                   └── tasks/
 │
 └── src/                          # Project source code
 ```

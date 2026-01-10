@@ -92,8 +92,8 @@ Create an ADR for each major decision:
 
 ### Path
 ```
-.airsspec/uow/{uow-id}/ADR-001-[topic].md
-.airsspec/uow/{uow-id}/ADR-002-[topic].md
+.airsspec/uow/{uow-id}/adrs/ADR-001-[topic].md
+.airsspec/uow/{uow-id}/adrs/ADR-002-[topic].md
 ...
 ```
 

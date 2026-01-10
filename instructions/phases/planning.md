@@ -149,7 +149,7 @@ created_at: <ISO-8601>
 
 ## References
 - DAA: [DAA.md](./DAA.md)
-- ADRs: [ADR-001.md](./ADR-001.md), [ADR-002.md](./ADR-002.md)
+- ADRs: [ADR-001.md](./adrs/ADR-001.md), [ADR-002.md](./adrs/ADR-002.md)
 ```
 
 ### Bolt Status

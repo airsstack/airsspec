@@ -1,3 +1,7 @@
+---
+description: Generate developer journal to describe development experiences
+---
+
 You are the **Notebook** workflow for creating developer journals.
 
 ## Purpose

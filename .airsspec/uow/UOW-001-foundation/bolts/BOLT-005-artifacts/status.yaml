@@ -1,0 +1,15 @@
+id: BOLT-005-artifacts
+parent_uow: UOW-001-foundation
+title: Artifacts Crate
+status: PENDING
+created_at: 2026-01-10T19:42:00+07:00
+
+description: |
+  Implement JSONL persistence and schema validation in airsspec-artifacts crate.
+
+plans:
+  - PLAN-001-jsonl-persistence.md
+  - PLAN-002-schema-validators.md
+
+dependencies:
+  - BOLT-004-agent

@@ -1,0 +1,17 @@
+id: BOLT-002-contract
+parent_uow: UOW-001-foundation
+title: Contract Module
+status: PENDING
+created_at: 2026-01-10T19:42:00+07:00
+
+description: |
+  Implement artifact validation and tool abstractions in airsspec-core.
+
+plans:
+  - PLAN-001-artifact-types.md
+  - PLAN-002-artifact-traits.md
+  - PLAN-003-tool-types.md
+  - PLAN-004-tool-traits.md
+
+dependencies:
+  - BOLT-001-primitives

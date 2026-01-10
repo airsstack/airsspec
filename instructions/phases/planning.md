@@ -158,8 +158,19 @@ created_at: <ISO-8601>
 # uow/{uow-id}/bolts/{bolt-id}/status.yaml
 id: bolt-database
 parent_uow: {uow-id}
-status: PENDING  # PENDING | IN_PROGRESS | COMPLETED | BLOCKED
+title: Database Module              # Human-readable name
+status: PENDING                     # PENDING | IN_PROGRESS | COMPLETED | BLOCKED
 created_at: <ISO-8601>
+
+description: |                      # What this bolt accomplishes
+  Implement database schema and migrations.
+
+plans:                              # List of plan files in this bolt
+  - PLAN-001-schema.md
+  - PLAN-002-migrations.md
+
+dependencies:                       # Bolt IDs that must complete first
+  - bolt-core                       # Empty array if no dependencies
 ```
 
 ### Plan Structure

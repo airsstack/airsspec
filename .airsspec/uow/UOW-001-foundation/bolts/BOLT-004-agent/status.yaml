@@ -1,0 +1,17 @@
+id: BOLT-004-agent
+parent_uow: UOW-001-foundation
+title: Agent Module
+status: PENDING
+created_at: 2026-01-10T19:42:00+07:00
+
+description: |
+  Implement agent execution and plugin system abstractions in airsspec-core.
+
+plans:
+  - PLAN-001-agent-types.md
+  - PLAN-002-agent-traits.md
+  - PLAN-003-plugin-types.md
+  - PLAN-004-plugin-traits.md
+
+dependencies:
+  - BOLT-003-cognition

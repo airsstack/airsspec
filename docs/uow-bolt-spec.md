@@ -110,7 +110,18 @@ A directory of markdown files tracking the actual execution results of each plan
 ```yaml
 id: BOLT-01-database
 parent_uow: UOW-20241229-auth
+title: Database Module
 status: PENDING
+created_at: 2024-12-29T10:00:00Z
+
+description: |
+  Implement database schema and migrations.
+
+plans:
+  - 01-schema.md
+  - 02-seeds.md
+
+dependencies: []
 ```
 
 ## 5. Workflow Transitions

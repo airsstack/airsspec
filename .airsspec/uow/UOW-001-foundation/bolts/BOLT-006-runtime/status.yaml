@@ -1,0 +1,15 @@
+id: BOLT-006-runtime
+parent_uow: UOW-001-foundation
+title: Runtime Crate
+status: PENDING
+created_at: 2026-01-10T19:42:00+07:00
+
+description: |
+  Implement orchestrator skeleton and state machine in airsspec-runtime crate.
+
+plans:
+  - PLAN-001-orchestrator.md
+  - PLAN-002-state-machine.md
+
+dependencies:
+  - BOLT-004-agent

@@ -68,6 +68,19 @@ Documents the implementation of explicit HALT points across all AirsSpec agents 
 
 **Files Changed**: 13 files modified (+665 lines), 2 redundant files removed
 
+#### [Setting Up the AirsSpec Roadmap and Rust Workspace](./2026-01-10-roadmap-and-rust-workspace-setup.md)
+**Topic**: Project Planning, Rust Workspace Setup
+
+Documents the creation of the implementation roadmap with 5 phases (UOWs) and the initial Rust workspace setup with Phase 1 crates (airsspec-core, airsspec-artifacts, airsspec-runtime).
+
+**Key Learnings**:
+- **Start with Discussion**: Taking time to discuss options before implementation prevents refactoring later
+- **Option B Wins**: The middle-ground approach (minimal first, expand later) is usually correct
+- **Workspace Dependencies**: Setting up `[workspace.dependencies]` from day one ensures version consistency
+- **Cargo.lock for Apps**: Applications commit Cargo.lock; libraries ignore it
+
+**Files Changed**: 10 files created (+2421 lines)
+
 ---
 
 ## For Readers
@@ -84,4 +97,4 @@ Feel free to browse chronologically or jump to topics that interest you. Each en
 
 ---
 
-*Last updated: 2026-01-09*
+*Last updated: 2026-01-10*

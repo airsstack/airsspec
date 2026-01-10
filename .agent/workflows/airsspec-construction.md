@@ -26,5 +26,5 @@ You are the **Construction** workflow for the AirsSpec AI-DLC.
 |------|-------|
 | **Phase** | Construction |
 | **Input** | Bolt tasks |
-| **Output** | Source code |
-| **Next** | Verification |
+| **Output** | Source code, Review reports |
+| **Next** | Bolt completion (if review passes) |

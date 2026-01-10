@@ -151,28 +151,55 @@ The Builder can delegate to specialized sub-agents:
 - Input: Specific implementation task
 
 ### Reviewer
-- Focused on quality
-- Tools: `read_file`, `run_lint`, `run_test`
-- Input: Code to review
+- Focused on **quality assurance** before task completion
+- Tools: `read_file`, `run_command` (lint/test), `git diff`
+- Input: Uncommitted changes from current Bolt
+
+**Reviewer Scope**:
+- Checks **only uncommitted changes** related to the current Bolt
+- Use `git diff --name-only` to identify changed files
+- Filter changes to files relevant to current Bolt scope
+
+**Reviewer Process**:
+1. **Before marking a Task complete**, run the Reviewer
+2. Get list of uncommitted files: `git diff --name-only`
+3. Run language-specific verification:
+   - Lint checks
+   - Test suite
+   - Pattern checks against project guidelines
+4. **If issues found**: Report issues and **BLOCK task completion**
+5. **If no issues**: Proceed to mark task complete
+
+> [!IMPORTANT]
+> **BLOCKING**: Do NOT mark a task complete if Reviewer finds issues.
+> Fix the issues first, then re-run the Reviewer.
+
+**Language-Specific Guidelines**:
+- Project-local instructions define the guidelines location
+- Apply project-specific patterns and standards
+- Use commands appropriate for the project's language/stack
 
 ```
 Builder
 ├── Coder → implements → Code
-└── Reviewer → analyzes → Report
+└── Reviewer → analyzes → Report (BLOCKS if issues)
 ```
 
 ---
 
 ## Verification Checklist
 
-Before marking a Bolt complete:
+Before marking a Task complete, Reviewer must verify:
 
-- [ ] All Tasks executed
-- [ ] Tests pass: `run_test`
-- [ ] Linting passes: `run_lint`
-- [ ] Type checking passes (if applicable)
+- [ ] Lint checks pass (language-specific linter)
+- [ ] Tests pass (language-specific test runner)
+- [ ] Code follows project guidelines
 - [ ] Code matches ADR decisions
 - [ ] Code matches DAA domain model
+
+Before marking a Bolt complete:
+
+- [ ] All Tasks executed and reviewed
 - [ ] Task files updated with execution output
 
 ---

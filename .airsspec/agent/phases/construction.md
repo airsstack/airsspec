@@ -86,6 +86,10 @@ Also read relevant:
 - ADRs for technical decisions
 - DAA for domain model
 - Existing code for patterns
+- **Rust implementation guidelines** in `$WORKSPACE_ROOT/.aiassisted/guidelines/rust/`:
+  - [`project-standard.md`]($WORKSPACE_ROOT/.aiassisted/guidelines/rust/project-standard.md) — **MANDATORY**: Import organization (§2.1), module patterns (§4.3), quality gates (§6.4)
+  - [`adt-patterns.md`]($WORKSPACE_ROOT/.aiassisted/guidelines/rust/adt-patterns.md) — Sum types, newtypes, derive macros
+  - [`dependency-management.md`]($WORKSPACE_ROOT/.aiassisted/guidelines/rust/dependency-management.md) — When adding new dependencies
 
 ### Step 3: Execute Tasks
 
@@ -151,28 +155,63 @@ The Builder can delegate to specialized sub-agents:
 - Input: Specific implementation task
 
 ### Reviewer
-- Focused on quality
-- Tools: `read_file`, `run_lint`, `run_test`
-- Input: Code to review
+- Focused on **quality assurance** before task completion
+- Tools: `read_file`, `run_command` (lint/test), `git diff`
+- Input: Uncommitted changes from current Bolt
+
+**Reviewer Scope (Rust)**:
+- Checks **only uncommitted changes** related to the current Bolt
+- Use `git diff --name-only` to identify changed files
+- Filter changes to files relevant to current Bolt scope
+
+**Reviewer Process (Rust)**:
+1. **Before marking a Task complete**, run the Reviewer
+2. Get list of uncommitted files: `git diff --name-only`
+3. Run Rust-specific verification:
+   - `cargo clippy --all-targets --all-features -- -D warnings`
+   - `cargo test`
+   - Check patterns against Rust guidelines (see below)
+4. **If issues found**: Report issues and **BLOCK task completion**
+5. **If no issues**: Proceed to mark task complete
+
+> [!IMPORTANT]
+> **BLOCKING**: Do NOT mark a task complete if Reviewer finds issues.
+> Fix the issues first, then re-run the Reviewer.
+
+**Rust Guidelines to Check**:
+- [`project-standard.md`]($WORKSPACE_ROOT/.aiassisted/guidelines/rust/project-standard.md):
+  - §2.1 Import organization (3-layer)
+  - §2.2 No FQN in type annotations
+  - §4.3 Module architecture (mod.rs contains only declarations)
+  - §6.4 Quality gates
+- [`adt-patterns.md`]($WORKSPACE_ROOT/.aiassisted/guidelines/rust/adt-patterns.md):
+  - §1 Sum types with enum
+  - §2 Newtype pattern
+  - §7 Derive macros
+- [`dependency-management.md`]($WORKSPACE_ROOT/.aiassisted/guidelines/rust/dependency-management.md):
+  - Workspace dependency hierarchy
 
 ```
 Builder
 ├── Coder → implements → Code
-└── Reviewer → analyzes → Report
+└── Reviewer → analyzes → Report (BLOCKS if issues)
 ```
 
 ---
 
 ## Verification Checklist
 
-Before marking a Bolt complete:
+Before marking a Task complete, Reviewer must verify:
 
-- [ ] All Tasks executed
-- [ ] Tests pass: `run_test`
-- [ ] Linting passes: `run_lint`
-- [ ] Type checking passes (if applicable)
+- [ ] `cargo clippy --all-targets --all-features -- -D warnings` passes
+- [ ] `cargo test` passes
+- [ ] Code follows Rust guidelines (see above)
 - [ ] Code matches ADR decisions
 - [ ] Code matches DAA domain model
+
+Before marking a Bolt complete:
+
+- [ ] All Tasks executed and reviewed
 - [ ] Task files updated with execution output
 
 ---

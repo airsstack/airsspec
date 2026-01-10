@@ -1,6 +1,6 @@
-//! # AirsSpec Artifacts
+//! # `AirsSpec` Artifacts
 //!
-//! Artifact validation and persistence layer for AirsSpec.
+//! Artifact validation and persistence layer for `AirsSpec`.
 //!
 //! This crate implements the artifact-related traits defined in `airsspec-core`:
 //!
@@ -45,17 +45,3 @@
 // pub mod validators;
 // pub mod persistence;
 // pub mod schemas;
-
-/// Placeholder to make the crate compile.
-/// This will be removed as modules are implemented.
-pub fn placeholder() {
-    // TODO: Remove when first module is added
-}
-
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_compiles() {
-        super::placeholder();
-    }
-}

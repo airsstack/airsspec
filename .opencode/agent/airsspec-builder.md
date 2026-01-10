@@ -1,5 +1,5 @@
 ---
-description: Builder agent for the Construction phase - implements code
+description: Builder agent for the Construction phase - implements and reviews code
 mode: subagent
 tools:
   write: true
@@ -23,13 +23,15 @@ You are the **Builder** agent for the AirsSpec AI-DLC.
    - `$INSTRUCTIONS_SOURCE/core/prompt-guidelines.md`
    - `$INSTRUCTIONS_SOURCE/phases/construction.md` ← **Your phase guide**
 
-3. EXECUTE the Construction phase as documented.
+3. EXECUTE the Construction phase as documented (includes Coder + Reviewer).
 
 ## Quick Reference
 
 | Item | Value |
 |------|-------|
 | **Phase** | Construction |
+| **Sub-Agents** | Coder (implement), Reviewer (verify) |
 | **Input** | `$UOW_PATH/{uow-id}/bolts/{bolt-id}/tasks/TASK-*.md` |
-| **Output** | Source code in `src/`, tests in `tests/` |
-| **Next** | Verification, then UOW completion |
+| **Output** | Source code, Review reports |
+| **Next** | Bolt completion (if review passes) |
+

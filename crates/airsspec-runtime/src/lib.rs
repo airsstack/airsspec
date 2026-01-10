@@ -1,8 +1,8 @@
-//! # AirsSpec Runtime
+//! # `AirsSpec` Runtime
 //!
-//! Orchestrator and state machine for AirsSpec agent execution.
+//! Orchestrator and state machine for `AirsSpec` agent execution.
 //!
-//! This crate is the "brain" of the AirsSpec system, responsible for:
+//! This crate is the "brain" of the `AirsSpec` system, responsible for:
 //!
 //! - **Orchestrator**: Coordinates agent execution and delegation
 //! - **State Machine**: Manages UOW phase transitions
@@ -56,17 +56,3 @@
 // pub mod state_machine;
 // pub mod memory_manager;
 // pub mod executor;
-
-/// Placeholder to make the crate compile.
-/// This will be removed as modules are implemented.
-pub fn placeholder() {
-    // TODO: Remove when first module is added
-}
-
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_compiles() {
-        super::placeholder();
-    }
-}

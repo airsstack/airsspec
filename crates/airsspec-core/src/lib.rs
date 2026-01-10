@@ -1,6 +1,6 @@
-//! # AirsSpec Core
+//! # `AirsSpec` Core
 //!
-//! Core traits, types, and errors for the AirsSpec multi-agent orchestration framework.
+//! Core traits, types, and errors for the `AirsSpec` multi-agent orchestration framework.
 //!
 //! This crate contains **zero implementations** - only abstractions that other crates
 //! depend on. This enforces the Dependency Inversion Principle (DIP) throughout the system.
@@ -21,7 +21,7 @@
 //!
 //! ## Design Philosophy
 //!
-//! All crates in the AirsSpec ecosystem depend on `airsspec-core` for their abstractions.
+//! All crates in the `AirsSpec` ecosystem depend on `airsspec-core` for their abstractions.
 //! Implementations live in separate crates (e.g., `airsspec-llm`, `airsspec-agents`).
 //!
 //! ```text
@@ -39,10 +39,9 @@
 //! └─────────────────────────────────────────┘
 //! ```
 
-// Modules will be added as we implement sub-phases:
 // Sub-phase 1.1: Primitives
-// pub mod error;
-// pub mod state;
+pub mod error;
+pub mod state;
 
 // Sub-phase 1.2: Contract Layer
 // pub mod artifact;
@@ -57,17 +56,6 @@
 // pub mod agent;
 // pub mod plugin;
 
-/// Placeholder to make the crate compile.
-/// This will be removed as modules are implemented.
-pub fn placeholder() {
-    // TODO: Remove when first module is added
-}
-
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_compiles() {
-        // Basic smoke test
-        super::placeholder();
-    }
-}
+/// Re-exports for convenient access.
+pub use error::AirsspecError;
+pub use state::{Phase, Transition, UowState};

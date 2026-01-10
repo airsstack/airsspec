@@ -94,6 +94,21 @@ Documents the creation of the first real Unit of Work (UOW-001 Foundation Layer)
 
 **Files Changed**: 50+ files created across UOW artifacts, bolt plans, and documentation sync
 
+### 2026-01-11
+
+#### [Integrating Rust Guidelines and Reviewer into Construction Phase](./2026-01-11-reviewer-and-rust-guidelines-integration.md)
+**Topic**: Construction Phase, Code Review, Language Guidelines
+
+Documents the integration of language-specific coding guidelines and the Reviewer sub-agent into the Construction phase. Covers the separation between generic upstream instructions and project-specific customizations.
+
+**Key Learnings**:
+- **Upstream vs Project-Local**: Generic instructions in `instructions/`, project-specific in `.airsspec/agent/`
+- **Reviewer as Blocking Gate**: Tasks can't be marked complete without passing review
+- **Scope Awareness**: Check only uncommitted changes per Bolt, not entire codebase
+- **Merged Workflow**: Builder + Reviewer in one Construction flow ensures review can't be skipped
+
+**Files Changed**: 4 files modified (construction.md upstream/local, workflow, agent)
+
 ---
 
 ## For Readers
@@ -110,4 +125,4 @@ Feel free to browse chronologically or jump to topics that interest you. Each en
 
 ---
 
-*Last updated: 2026-01-10*
+*Last updated: 2026-01-11*

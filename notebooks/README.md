@@ -81,6 +81,19 @@ Documents the creation of the implementation roadmap with 5 phases (UOWs) and th
 
 **Files Changed**: 10 files created (+2421 lines)
 
+#### [Setting Up UOW-001: From Research to Bolt Plans](./2026-01-10-uow001-setup-and-documentation-alignment.md)
+**Topic**: AI-DLC, UOW Setup, Documentation Alignment
+
+Documents the creation of the first real Unit of Work (UOW-001 Foundation Layer), walking through all AI-DLC phases from Research to Planning. Covers documentation alignment issues discovered and fixed, and the formalization of bolt status.yaml schema.
+
+**Key Learnings**:
+- **Documentation Drift is Real**: Even recently written docs can drift from each other (architecture.md vs uow-bolt-spec.md vs instructions)
+- **Enhancements Should Be Documented**: Adding "helpful" fields to schemas without updating instructions creates surprises
+- **ADR Directory Makes Sense**: Grouping ADRs in `adrs/` subdirectory keeps UOW root cleaner
+- **AI-DLC Flow Works**: Each phase builds on the previous one in a methodical way
+
+**Files Changed**: 50+ files created across UOW artifacts, bolt plans, and documentation sync
+
 ---
 
 ## For Readers

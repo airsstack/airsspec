@@ -48,31 +48,10 @@ pub mod artifact;
 pub mod tool;
 
 // Sub-phase 1.3: Cognition Layer
-// pub mod llm;
-// pub mod memory;
-// pub mod knowledge;
+pub mod knowledge;
+pub mod llm;
+pub mod memory;
 
 // Sub-phase 1.4: Agent Layer
 // pub mod agent;
 // pub mod plugin;
-
-// Public API re-exports (commonly used types for library users)
-//
-// NOTE: These re-exports are at library root level to provide convenient
-// public API access. Internal mod.rs files follow the guideline of
-// no type re-exports (only module declarations).
-//
-// External users import: `use airsspec_core::ArtifactType;`
-// Internal modules import: `use crate::artifact::types::ArtifactType;`
-#[doc(inline)]
-pub use artifact::traits::{ArtifactStore, ArtifactValidator};
-#[doc(inline)]
-pub use artifact::types::{ArtifactRef, ArtifactType, ValidationError, ValidationResult};
-#[doc(inline)]
-pub use error::AirsspecError;
-#[doc(inline)]
-pub use state::{Phase, Transition, UowState};
-#[doc(inline)]
-pub use tool::traits::{Tool, ToolRegistry};
-#[doc(inline)]
-pub use tool::types::{ToolId, ToolInput, ToolOutput};

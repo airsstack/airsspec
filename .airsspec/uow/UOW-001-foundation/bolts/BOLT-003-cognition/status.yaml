@@ -1,8 +1,9 @@
 id: BOLT-003-cognition
 parent_uow: UOW-001-foundation
 title: Cognition Module
-status: PENDING
+status: COMPLETED
 created_at: 2026-01-10T19:42:00+07:00
+completed_at: 2026-01-11T21:55:00+07:00
 
 description: |
   Implement LLM, memory, and knowledge abstractions in airsspec-core.
@@ -17,3 +18,11 @@ plans:
 
 dependencies:
   - BOLT-002-contract
+
+tasks:
+  - TASK-001-llm-types.md
+  - TASK-002-llm-traits.md
+  - TASK-003-memory-types.md
+  - TASK-004-memory-traits.md
+  - TASK-005-knowledge-types.md
+  - TASK-006-knowledge-traits.md

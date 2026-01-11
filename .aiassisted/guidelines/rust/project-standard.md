@@ -74,46 +74,51 @@ use std::time::Instant; // Only for performance measuring, never business logic
 ```
 
 ### §4.3 Module Architecture Patterns (MANDATORY)
-**mod.rs files MUST contain ONLY:**
+**mod.rs and lib.rs files MUST contain ONLY:**
 - Module declarations (`pub mod example;`)
 - Re-exports of **submodules only** (NOT individual types)
 - NO implementation code
 
-**Re-export Policy:**
+**Re-export Policy (applies to BOTH mod.rs AND lib.rs):**
 - ✅ Re-export submodules: `pub mod config;`
 - ❌ Do NOT re-export types/objects: `pub use config::SomeType;`
 - ❌ Do NOT use glob re-exports: `pub use config::*;`
+- ❌ Do NOT use `#[doc(inline)] pub use` for types
 
 **Rationale:**
 - **Explicitness**: Callers explicitly choose what types to import
 - **Clarity**: Import statements clearly show dependencies
 - **No namespace pollution**: Avoids implicit type conflicts
+- **No name collisions**: Different modules may have types with same name
 - **Maintainability**: Easier to track type usage across codebase
 
 ```rust
-// ✅ CORRECT mod.rs - Only module declarations
+// ✅ CORRECT lib.rs or mod.rs - Only module declarations
 pub mod config;
 pub mod context;
 pub mod error;
 
 // NOTE: No type re-exports. Callers use namespaced access:
-// use crate::config::OSLConfig;
-// use crate::context::SystemContext;
+// use mycrate::config::OSLConfig;
+// use mycrate::context::SystemContext;
 ```
 
 ```rust
-// ❌ FORBIDDEN - Type re-exports in mod.rs
+// ❌ FORBIDDEN - Type re-exports in lib.rs or mod.rs
 pub mod config;
 pub use config::{OSLConfig, SecurityConfig};  // ❌ Don't re-export types
-pub use config::*;                             // ❌ Don't use glob re-exports
+
+// ❌ ALSO FORBIDDEN - doc(inline) re-exports
+#[doc(inline)]
+pub use config::OSLConfig;                     // ❌ Don't use doc(inline) re-exports
 ```
 
 **Caller Usage Pattern:**
 ```rust
 // Callers import exactly what they need from the specific module
-use crate::core::runtime::errors::WasmError;
-use crate::core::runtime::limits::ResourceLimits;
-use crate::core::component::id::ComponentId;
+use mycrate::core::runtime::errors::WasmError;
+use mycrate::core::runtime::limits::ResourceLimits;
+use mycrate::core::component::id::ComponentId;
 ```
 
 ### §5.1 Dependency Management (MANDATORY)

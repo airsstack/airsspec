@@ -32,7 +32,7 @@ use serde::{Deserialize, Serialize};
 /// # Examples
 ///
 /// ```rust
-/// use airsspec_core::Phase;
+/// use airsspec_core::state::Phase;
 ///
 /// let current_phase = Phase::Planning;
 /// assert_eq!(current_phase, Phase::Planning);
@@ -73,7 +73,7 @@ pub enum Phase {
 /// # Examples
 ///
 /// ```rust
-/// use airsspec_core::{Phase, UowState};
+/// use airsspec_core::state::{Phase, UowState};
 /// use chrono::Utc;
 ///
 /// let state = UowState {
@@ -106,7 +106,7 @@ impl UowState {
     /// # Examples
     ///
     /// ```rust
-    /// use airsspec_core::{Phase, UowState};
+    /// use airsspec_core::state::{Phase, UowState};
     ///
     /// let state = UowState::new("UOW-001", Phase::Idle);
     /// assert_eq!(state.id, "UOW-001");
@@ -127,7 +127,7 @@ impl UowState {
     /// # Examples
     ///
     /// ```rust
-    /// use airsspec_core::{Phase, UowState};
+    /// use airsspec_core::state::{Phase, UowState};
     ///
     /// let mut state = UowState::new("UOW-001", Phase::Planning);
     /// state.update_phase(Phase::Construction);
@@ -153,7 +153,7 @@ impl UowState {
 /// # Examples
 ///
 /// ```rust
-/// use airsspec_core::{Phase, Transition};
+/// use airsspec_core::state::{Phase, Transition};
 /// use chrono::Utc;
 ///
 /// let transition = Transition {
@@ -184,7 +184,7 @@ impl Transition {
     /// # Examples
     ///
     /// ```rust
-    /// use airsspec_core::{Phase, Transition};
+    /// use airsspec_core::state::{Phase, Transition};
     ///
     /// let transition = Transition::new(Phase::Planning, Phase::Construction);
     /// assert_eq!(transition.from, Phase::Planning);
@@ -206,7 +206,7 @@ impl Transition {
     /// # Examples
     ///
     /// ```rust
-    /// use airsspec_core::{Phase, Transition};
+    /// use airsspec_core::state::{Phase, Transition};
     ///
     /// let transition = Transition::with_reason(
     ///     Phase::Planning,

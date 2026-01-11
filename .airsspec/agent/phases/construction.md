@@ -115,14 +115,40 @@ Also read relevant:
 
 ### Step 3: Execute Tasks
 
+> [!CAUTION]
+> **ONE TASK AT A TIME**: Execute ONE task, then STOP and wait for user approval before proceeding.
+
 For each Task (in order):
 
 1. **Read Plan**: Understand what to do
 2. **Implement**: Write code following the plan
 3. **Verify**: Run tests, linters, type checks
 4. **Document**: Update TASK file with execution output
+5. **HALT**: Stop execution and present to user for review
 
-### Step 4: Update Bolt Status
+### Step 4: Wait for User Approval
+
+> [!IMPORTANT]
+> **MANDATORY HALT**: After completing each task, you MUST:
+
+1. **STOP** execution immediately
+2. **PRESENT** to the user:
+   - Summary of what was implemented
+   - Files created/modified
+   - Verification results (tests, lints)
+3. **ASK** for explicit approval:
+   > "Task {TASK-ID} complete. Files modified: {list}. Tests: {pass/fail}.
+   > 
+   > **Approve this task?** (yes/no/changes needed)"
+4. **WAIT** for user response before proceeding to next task
+
+**If user requests changes**: Make the changes, re-verify, and ask again.
+**If user approves**: Proceed to next task (repeat from Step 3).
+**If no more tasks**: Proceed to Step 5.
+
+### Step 5: Update Bolt Status
+
+Only after ALL tasks are approved:
 
 ```yaml
 # bolts/{bolt-id}/status.yaml
@@ -130,7 +156,7 @@ status: COMPLETED
 completed_at: <ISO-8601>
 ```
 
-### Step 5: Repeat
+### Step 6: Repeat
 
 Move to next Bolt until all are complete.
 

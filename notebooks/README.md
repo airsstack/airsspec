@@ -96,6 +96,20 @@ Documents the creation of the first real Unit of Work (UOW-001 Foundation Layer)
 
 ### 2026-01-11
 
+#### [Agent Orchestration, Code Quality, and Language Guidelines](./2026-01-11-agent-orchestration-code-quality-language-guidelines.md)
+**Topic**: Agent Orchestration, Code Quality, Language Guidelines
+
+Documents comprehensive improvements to ensure consistency and human oversight in the AI-DLC workflow, including project standard loading fixes, Reviewer sub-agent integration as a blocking gate, and the establishment of UOW-001 Foundation with complete artifacts.
+
+**Key Learnings**:
+- **Upstream vs Project-Local**: Generic instructions in `instructions/`, project-specific in `.airsspec/agent/`
+- **Human-in-the-Loop at Multiple Levels**: Phase-level HALTs (between artifacts) and task-level HALTs (after each bolt task)
+- **Reviewer as Gate, Not Suggestion**: Tasks literally can't be marked complete without passing review
+- **Scope Awareness Matters**: Reviewer checks only uncommitted changes per Bolt, preventing distraction from unrelated files
+- **Filesystem as Truth**: All instructions, guidelines, and state persisted to disk for transparency and debuggability
+
+**Files Changed**: 50+ files (phase instructions, workflow agents, UOW-001 artifacts with requirements, DAA, 4 ADRs, RFC, 6 Bolts with 21 tasks)
+
 #### [Integrating Rust Guidelines and Reviewer into Construction Phase](./2026-01-11-reviewer-and-rust-guidelines-integration.md)
 **Topic**: Construction Phase, Code Review, Language Guidelines
 

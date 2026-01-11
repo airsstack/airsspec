@@ -1,6 +1,6 @@
 //! # `AirsSpec` Core
 //!
-//! Core traits, types, and errors for the `AirsSpec` multi-agent orchestration framework.
+//! Core traits, types, and errors for `AirsSpec` multi-agent orchestration framework.
 //!
 //! This crate contains **zero implementations** - only abstractions that other crates
 //! depend on. This enforces the Dependency Inversion Principle (DIP) throughout the system.
@@ -44,8 +44,8 @@ pub mod error;
 pub mod state;
 
 // Sub-phase 1.2: Contract Layer
-// pub mod artifact;
-// pub mod tool;
+pub mod artifact;
+pub mod tool;
 
 // Sub-phase 1.3: Cognition Layer
 // pub mod llm;
@@ -56,6 +56,23 @@ pub mod state;
 // pub mod agent;
 // pub mod plugin;
 
-/// Re-exports for convenient access.
+// Public API re-exports (commonly used types for library users)
+//
+// NOTE: These re-exports are at library root level to provide convenient
+// public API access. Internal mod.rs files follow the guideline of
+// no type re-exports (only module declarations).
+//
+// External users import: `use airsspec_core::ArtifactType;`
+// Internal modules import: `use crate::artifact::types::ArtifactType;`
+#[doc(inline)]
+pub use artifact::traits::{ArtifactStore, ArtifactValidator};
+#[doc(inline)]
+pub use artifact::types::{ArtifactRef, ArtifactType, ValidationError, ValidationResult};
+#[doc(inline)]
 pub use error::AirsspecError;
+#[doc(inline)]
 pub use state::{Phase, Transition, UowState};
+#[doc(inline)]
+pub use tool::traits::{Tool, ToolRegistry};
+#[doc(inline)]
+pub use tool::types::{ToolId, ToolInput, ToolOutput};

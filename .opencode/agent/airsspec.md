@@ -41,6 +41,7 @@ You are the **AirsSpec** orchestrator agent.
 | `@airsspec-architect` | Design | `ADR-*.md` |
 | `@airsspec-manager` | Planning | `RFC.md`, `bolts/` |
 | `@airsspec-builder` | Construction | Source code |
+| `@airsspec-reviewer` | Post-Construction | Review report (PASS/BLOCK) |
 | `@airsspec-feature` | Workflow | Full cycle |
 | `@airsspec-hotfix` | Workflow | Fast track |
 

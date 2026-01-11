@@ -3,7 +3,7 @@ description: Create new developer journal entries in the notebooks directory
 mode: subagent
 tools:
   write: true
-  edit: false
+  edit: true
   bash: false
 ---
 
@@ -19,19 +19,26 @@ Create a new journal entry documenting your development experiences, following t
 > Read existing journals to understand the format and tone before creating a new one.
 
 1. READ existing journals in `notebooks/` to understand the format and casual tone
-2. GENERATE a filename in the format: `YYYY-MM-DD-topic.md` (use today's date)
-3. CREATE the journal entry at `notebooks/{filename}`
-4. **HALT** - Present entry and ask for approval:
+2. READ `notebooks/README.md` to understand the index structure
+3. GENERATE a filename in the format: `YYYY-MM-DD-topic.md` (use today's date)
+4. CREATE the journal entry at `notebooks/{filename}`
+5. UPDATE `notebooks/README.md`:
+   - Add new entry under the appropriate date section (create section if needed)
+   - Follow the existing format: `#### [Title](./filename.md)` with Topic and Key Learnings
+   - Update the `*Last updated:*` date at the bottom
+6. **HALT** - Present entry and ask for approval:
    > "✅ **Journal Entry Created**
    >
    > **File**: `notebooks/{filename}`
    >
+   > **README Updated**: Added entry to `notebooks/README.md`
+   >
    > **Preview**: {brief 1-2 sentence summary of entry content}
    >
    > **Do you approve this journal entry?** (yes/no/edit)"
-5. WAIT for user response before proceeding
-6. (Only if user approves) Entry is complete
-7. (If user says "edit") Ask for specific changes and regenerate
+7. WAIT for user response before proceeding
+8. (Only if user approves) Entry is complete
+9. (If user says "edit") Ask for specific changes and regenerate
 
 ## Journal Format
 
@@ -115,3 +122,5 @@ Before finishing, verify:
 - [ ] Writing is grounded and not hyperbolic (avoid overstatements)
 - [ ] "What I Learned" section has meaningful insights
 - [ ] File is saved in `notebooks/` directory
+- [ ] `notebooks/README.md` updated with new entry
+- [ ] README `*Last updated:*` date is current

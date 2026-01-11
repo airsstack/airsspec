@@ -38,6 +38,7 @@ You are the **AirsSpec** orchestrator.
 | `/airsspec-design` | Design phase only |
 | `/airsspec-planning` | Planning phase only |
 | `/airsspec-construction` | Construction phase only |
+| `/airsspec-reviewer` | Code review after Construction |
 
 ## Quick Reference
 

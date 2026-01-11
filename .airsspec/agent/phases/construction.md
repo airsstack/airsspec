@@ -12,6 +12,30 @@ You are the **Builder**. Your job is to implement the plans and produce working 
 
 ---
 
+## References
+
+> [!IMPORTANT]
+> **MANDATORY**: Read these documents before proceeding.
+
+### Core References
+
+- [path-variables.md](../core/path-variables.md) — Path variable definitions
+- [prompt-guidelines.md](../core/prompt-guidelines.md) — Prompt engineering standards
+
+### Language Guidelines
+
+> [!CAUTION]
+> **MANDATORY FOR RUST PROJECTS**: You MUST read and follow these guidelines before writing any code.
+> HALT execution if you attempt to implement without first reading these documents.
+
+| Document | Path | Purpose |
+|----------|------|---------|
+| Project Standard | `$GUIDELINES_PATH/rust/project-standard.md` | Import organization (§2.1), module patterns (§4.3), quality gates (§6.4) |
+| ADT Patterns | `$GUIDELINES_PATH/rust/adt-patterns.md` | Sum types, newtypes, derive macros |
+| Dependency Management | `$GUIDELINES_PATH/rust/dependency-management.md` | Dependency hierarchy and management rules |
+
+---
+
 ## Goal
 
 Execute Bolt plans to produce:
@@ -27,6 +51,7 @@ Execute Bolt plans to produce:
 - [ ] Planning phase complete
 - [ ] RFC exists and is approved
 - [ ] Bolts with plans exist
+- [ ] **Language guidelines read** (see [References](#references) section above)
 - [ ] Reference: [planning.md](./planning.md)
 
 ---
@@ -86,10 +111,7 @@ Also read relevant:
 - ADRs for technical decisions
 - DAA for domain model
 - Existing code for patterns
-- **Rust implementation guidelines** in `$WORKSPACE_ROOT/.aiassisted/guidelines/rust/`:
-  - [`project-standard.md`]($WORKSPACE_ROOT/.aiassisted/guidelines/rust/project-standard.md) — **MANDATORY**: Import organization (§2.1), module patterns (§4.3), quality gates (§6.4)
-  - [`adt-patterns.md`]($WORKSPACE_ROOT/.aiassisted/guidelines/rust/adt-patterns.md) — Sum types, newtypes, derive macros
-  - [`dependency-management.md`]($WORKSPACE_ROOT/.aiassisted/guidelines/rust/dependency-management.md) — When adding new dependencies
+- **Language guidelines** from the [References](#references) section (already read as prerequisite)
 
 ### Step 3: Execute Tasks
 
@@ -178,17 +200,17 @@ The Builder can delegate to specialized sub-agents:
 > **BLOCKING**: Do NOT mark a task complete if Reviewer finds issues.
 > Fix the issues first, then re-run the Reviewer.
 
-**Rust Guidelines to Check**:
-- [`project-standard.md`]($WORKSPACE_ROOT/.aiassisted/guidelines/rust/project-standard.md):
+**Rust Guidelines to Check** (from [References](#references) section):
+- [`project-standard.md`]($GUIDELINES_PATH/rust/project-standard.md):
   - §2.1 Import organization (3-layer)
   - §2.2 No FQN in type annotations
   - §4.3 Module architecture (mod.rs contains only declarations)
   - §6.4 Quality gates
-- [`adt-patterns.md`]($WORKSPACE_ROOT/.aiassisted/guidelines/rust/adt-patterns.md):
+- [`adt-patterns.md`]($GUIDELINES_PATH/rust/adt-patterns.md):
   - §1 Sum types with enum
   - §2 Newtype pattern
   - §7 Derive macros
-- [`dependency-management.md`]($WORKSPACE_ROOT/.aiassisted/guidelines/rust/dependency-management.md):
+- [`dependency-management.md`]($GUIDELINES_PATH/rust/dependency-management.md):
   - Workspace dependency hierarchy
 
 ```

@@ -16,6 +16,7 @@ You are the **Construction** workflow for the AirsSpec AI-DLC.
 2. READ these documents in order:
    - `$INSTRUCTIONS_SOURCE/core/path-variables.md`
    - `$INSTRUCTIONS_SOURCE/core/prompt-guidelines.md`
+   - `$GUIDELINES_PATH/rust/*.md` ← **MANDATORY for Rust projects**
    - `$INSTRUCTIONS_SOURCE/phases/construction.md` ← **Your phase guide**
 
 3. EXECUTE the Construction phase as documented in the instructions.

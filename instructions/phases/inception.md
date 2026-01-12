@@ -23,9 +23,18 @@ Create a Domain Architecture Analysis (DAA) that defines:
 
 ## Prerequisites
 
+> [!IMPORTANT]
+> **MANDATORY READING BEFORE DAA GENERATION**
+
+Before starting, you MUST:
+1. READ `$WORKSPACE_ROOT/researches/ddd-principles.md` — DDD concepts reference
+2. READ `templates/uow/DAA.md` — DAA template structure
+3. READ `uow/{uow-id}/requirements.md` — Input document to derive from
+
 - [ ] Research phase complete
 - [ ] `requirements.md` exists and is approved
-- [ ] Reference: [research.md](./research.md)
+- [ ] DDD principles document reviewed
+- [ ] DAA template reviewed
 
 ---
 

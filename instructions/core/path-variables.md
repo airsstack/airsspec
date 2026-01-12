@@ -39,6 +39,8 @@ Single source of truth for all path variables used throughout AirsSpec instructi
 | `$LIBRARY_PATH` | `$KNOWLEDGE_PATH/library` | Warm memory — synthesized summaries |
 | `$VECTORS_PATH` | `$KNOWLEDGE_PATH/vectors` | Cold memory — vector embeddings |
 | `$PLAYBOOKS_PATH` | `$KNOWLEDGE_PATH/playbooks` | Reusable architecture patterns |
+| `$TEMPLATES_PATH` | `$WORKSPACE_ROOT/templates` | Artifact templates (DAA, ADR, RFC, etc.) |
+| `$RESEARCHES_PATH` | `$WORKSPACE_ROOT/researches` | Research documents (DDD principles, integrations, etc.) |
 
 ---
 
@@ -140,7 +142,7 @@ Before using a path, verify existence when required:
 |----------|-----------|
 | **Workspace** | `$WORKSPACE_ROOT`, `$AIRSSPEC_PATH` |
 | **Instructions** | `$CORE_INSTRUCTIONS_PATH`, `$PROJECT_AGENT_PATH`, `$INSTRUCTIONS_SOURCE` |
-| **Content** | `$SOURCES_PATH`, `$KNOWLEDGE_PATH`, `$LIBRARY_PATH`, `$VECTORS_PATH`, `$PLAYBOOKS_PATH` |
+| **Content** | `$SOURCES_PATH`, `$KNOWLEDGE_PATH`, `$LIBRARY_PATH`, `$VECTORS_PATH`, `$PLAYBOOKS_PATH`, `$TEMPLATES_PATH`, `$RESEARCHES_PATH` |
 | **Work** | `$UOW_PATH`, `$CONTEXTS_PATH`, `$SESSION_PATH` |
 | **Config** | `$CONFIG_FILE`, `$WORKSPACE_FILE` |
 

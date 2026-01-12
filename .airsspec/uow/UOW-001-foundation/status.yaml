@@ -1,10 +1,10 @@
 id: UOW-001-foundation
 title: Foundation Layer
 phase: Construction
-status: completed
-created_at: 2026-01-10T18:06:00+07:00
-updated_at: 2026-01-12T00:00:00+07:00
-completed_at: 2026-01-12T00:00:00Z
+status: in_progress
+created_at: 2026-01-09T18:00:00+07:00
+updated_at: 2026-01-12T18:10:00+07:00
+# completed_at: 2026-01-10T19:45:00+07:00  # Reopened for BOLT-007Z
 
 artifacts:
   requirements:
@@ -65,10 +65,13 @@ sub_phases:
     name: Agent
     status: completed
     completed_at: 2026-01-12T00:00:00+07:00
+  - id: "1.5"
+    name: Reasoning Patterns
+    status: pending
+    reason: Added to support pluggable reasoning strategies
 
 bolts:
-  total: 6
+  total: 7
   completed: 6
   in_progress: 0
-  pending: 0
-
+  pending: 1

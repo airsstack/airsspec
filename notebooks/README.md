@@ -123,6 +123,19 @@ Documents the integration of language-specific coding guidelines and the Reviewe
 
 **Files Changed**: 4 files modified (construction.md upstream/local, workflow, agent)
 
+### 2026-01-12
+
+#### [Setting Up UOW-002 and Discovering the Foundation Principle](./2026-01-12-uow002-setup-and-foundation-principle.md)
+**Topic**: AI-DLC Workflow, DAA Generation, Core Abstractions
+
+Documents setting up UOW-002 (Agent System) and discovering two key issues: incorrect DAA generation (implementation-focused instead of DDD) and pattern-specific types in core abstractions. Led to creating DDD research documents, reasoning pattern research, and amending UOW-001 with BOLT-007 for the `ReasoningPattern` trait.
+
+**Key Learnings**:
+- Always read **templates** before generating artifacts, not previous examples
+- Core types must be **generic and pattern-agnostic** (Foundation Principle)
+- §4.3 (no type re-exports in mod.rs) is easy to violate — check plans against guidelines
+- Amending "complete" UOWs is acceptable when new foundational needs are discovered
+
 ---
 
 ## For Readers
@@ -139,4 +152,4 @@ Feel free to browse chronologically or jump to topics that interest you. Each en
 
 ---
 
-*Last updated: 2026-01-11*
+*Last updated: 2026-01-12*

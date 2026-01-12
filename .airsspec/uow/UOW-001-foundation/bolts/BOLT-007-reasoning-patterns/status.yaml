@@ -1,0 +1,32 @@
+id: BOLT-007-reasoning-patterns
+parent_uow: UOW-001-foundation
+title: Reasoning Patterns Module
+status: PENDING
+created_at: 2026-01-12T18:10:00+07:00
+priority: HIGH
+
+description: |
+  Add ReasoningPattern trait abstraction to airsspec-core.
+  This enables pluggable reasoning strategies (ReAct, CoT, ToT, Hybrid)
+  for agent execution, supporting parallel tool invocation and 
+  event-driven execution models.
+
+plans:
+  - PLAN-001-reasoning-traits.md
+  - PLAN-002-reasoning-types.md
+
+dependencies:
+  - BOLT-001-primitives  # Requires error types
+  - BOLT-004-agent       # Requires AgentContext types
+
+deliverables:
+  - airsspec-core/src/reasoning/mod.rs
+  - airsspec-core/src/reasoning/traits.rs
+  - airsspec-core/src/reasoning/types.rs
+
+references:
+  - researches/pattern-react.md
+  - researches/pattern-cot.md
+  - researches/pattern-tot.md
+  - researches/pattern-hybrid.md
+  - docs/architecture.md (Section 3.3)

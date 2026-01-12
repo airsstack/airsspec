@@ -99,6 +99,9 @@ airsspec-core/src/
 ├── agent/
 │   ├── traits.rs      # Agent, AgentExecutor
 │   └── types.rs       # AgentId, AgentConfig, Budget, DelegationSignal
+├── reasoning/
+│   ├── traits.rs      # ReasoningPattern, PatternSelector
+│   └── types.rs       # ReasoningStep, ExecutionContext, PatternConfig
 ├── llm/
 │   ├── traits.rs      # LLMProvider, StreamHandler
 │   └── types.rs       # CompletionRequest, TokenUsage
@@ -135,26 +138,32 @@ graph TD
         AgentTrait[trait Agent]
         LLMTrait[trait LLMProvider]
         ToolTrait[trait Tool]
+        ReasoningTrait[trait ReasoningPattern]
     end
     
     subgraph "Implementations"
         Researcher[Researcher]
-        OpenAI[OpenAIProvider]
+        OpenRouter[OpenRouterProvider]
         WriteFile[WriteFileTool]
+        ReactPattern[ReactPattern]
+        CotPattern[CotPattern]
     end
     
     subgraph "Consumers"
         Orchestrator[Orchestrator]
-        Executor[BudgetedExecutor]
+        Executor[EventDrivenExecutor]
     end
     
     Researcher -->|implements| AgentTrait
-    OpenAI -->|implements| LLMTrait
+    OpenRouter -->|implements| LLMTrait
     WriteFile -->|implements| ToolTrait
+    ReactPattern -->|implements| ReasoningTrait
+    CotPattern -->|implements| ReasoningTrait
     
     Orchestrator -->|depends on| AgentTrait
     Executor -->|depends on| LLMTrait
     Executor -->|depends on| ToolTrait
+    Executor -->|depends on| ReasoningTrait
 ```
 
 ### 3.2 Example: Agent Trait
@@ -181,6 +190,41 @@ pub trait AgentExecutor: Send + Sync {
         agent: &dyn Agent, 
         budget: Budget
     ) -> Result<ExecutionResult, ExecutionError>;
+}
+```
+
+### 3.3 Example: ReasoningPattern Trait
+
+```rust
+// airsspec-core/src/reasoning/traits.rs
+#[async_trait]
+pub trait ReasoningPattern: Send + Sync {
+    /// Pattern identifier (e.g., "react", "cot", "tot")
+    fn name(&self) -> &str;
+    
+    /// Generate the next reasoning step
+    async fn next_step(
+        &self, 
+        context: &ExecutionContext
+    ) -> Result<ReasoningStep, PatternError>;
+    
+    /// Check if execution should continue
+    fn should_continue(&self, context: &ExecutionContext) -> bool;
+    
+    /// Format initial prompt for the pattern
+    fn format_prompt(&self, query: &str) -> String;
+}
+
+/// Step types produced by reasoning patterns
+pub enum ReasoningStep {
+    /// Internal reasoning (thought)
+    Thought(String),
+    /// Single tool invocation
+    Action { tool: String, args: ToolInput },
+    /// Parallel tool invocations
+    ParallelActions { actions: Vec<Action> },
+    /// Final answer
+    FinalAnswer(String),
 }
 ```
 

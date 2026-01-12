@@ -40,6 +40,8 @@ Single source of truth for all path variables used throughout AirsSpec instructi
 | `$VECTORS_PATH` | `$KNOWLEDGE_PATH/vectors` | Cold memory — vector embeddings |
 | `$PLAYBOOKS_PATH` | `$KNOWLEDGE_PATH/playbooks` | Reusable architecture patterns |
 | `$GUIDELINES_PATH` | `$WORKSPACE_ROOT/.aiassisted/guidelines` | Project-specific coding guidelines |
+| `$TEMPLATES_PATH` | `$WORKSPACE_ROOT/templates` | Artifact templates (DAA, ADR, RFC, etc.) |
+| `$RESEARCHES_PATH` | `$WORKSPACE_ROOT/researches` | Research documents (DDD principles, integrations, etc.) |
 
 ---
 

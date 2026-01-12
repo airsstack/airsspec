@@ -48,3 +48,13 @@ Fixed the following issues identified by the airsspec-reviewer:
 2. **Clippy Warning - Doc markdown**: Added backticks around "AirsSpec" in documentation
 3. **Clippy Warning - Expect used**: Added `#[allow(clippy::expect_used)]` to serialization tests where expect() is intentional
 4. **Clippy Warning - Redundant clone**: Added `#[allow(clippy::redundant_clone)]` to clone tests where clones are intentional (testing Clone trait)
+
+### Standard Compliance Fixes (2025-01-12)
+
+Fixed the following CRITICAL violation of `.aiassisted/guidelines/rust/project-standard.md`:
+
+1. **§4.3 Re-Export Policy Violation (CRITICAL)**: Removed type re-exports from `plugin/mod.rs`
+   - Changed from: `pub use traits::{PluginLoader, PromptOverlay}`
+   - Changed from: `pub use types::{OverlaySpec, PluginManifest, ResolutionOrder}`
+   - Changed to: Module declarations only (`pub mod traits; pub mod types;`)
+   - Rationale: Callers must use explicit imports like `use airsspec_core::plugin::traits::PluginLoader;`

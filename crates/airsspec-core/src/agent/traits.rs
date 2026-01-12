@@ -11,11 +11,10 @@ use async_trait::async_trait;
 use thiserror::Error;
 
 // Layer 3: Internal module imports
+use super::types::{AgentConfig, AgentId, Budget, DelegationSignal};
 use crate::error::AgentError;
 use crate::memory::types::MemoryFragment;
 use crate::state::Phase;
-
-use super::types::{AgentConfig, AgentId, DelegationSignal};
 
 /// Execution context for an agent.
 ///
@@ -332,7 +331,7 @@ pub trait AgentExecutor: Send + Sync {
     async fn run(
         &self,
         agent: &dyn Agent,
-        budget: super::types::Budget,
+        budget: Budget,
     ) -> Result<ExecutionResult, ExecutionError>;
 }
 

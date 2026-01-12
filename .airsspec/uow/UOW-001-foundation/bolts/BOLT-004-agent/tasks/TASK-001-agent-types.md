@@ -45,3 +45,13 @@ Fixed the following issues identified by the airsspec-reviewer:
 1. **Clippy Warning - Missing const fn**: Changed `Budget::exceeded()` to `pub const fn exceeded()` to allow compile-time evaluation
 2. **Clippy Warning - Expect used**: Added `#[allow(clippy::expect_used)]` to serialization tests where expect() is intentional
 3. **Clippy Warning - Redundant clone**: Added `#[allow(clippy::redundant_clone)]` to clone tests where clones are intentional (testing Clone trait)
+
+### Standard Compliance Fixes (2025-01-12)
+
+Fixed the following CRITICAL violations of `.aiassisted/guidelines/rust/project-standard.md`:
+
+1. **§4.3 Re-Export Policy Violation (CRITICAL)**: Removed type re-exports from `agent/mod.rs`
+   - Changed from: `pub use traits::{Agent, AgentContext, AgentExecutor, ...}`
+   - Changed from: `pub use types::{AgentConfig, AgentId, Budget, DelegationSignal}`
+   - Changed to: Module declarations only (`pub mod traits; pub mod types;`)
+   - Rationale: Callers must use explicit imports like `use airsspec_core::agent::traits::Agent;`

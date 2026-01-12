@@ -5,7 +5,3 @@
 
 pub mod traits;
 pub mod types;
-
-// Public re-exports for convenience
-pub use traits::{PluginLoader, PromptOverlay};
-pub use types::{OverlaySpec, PluginManifest, ResolutionOrder};

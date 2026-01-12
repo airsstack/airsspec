@@ -51,17 +51,28 @@ Hotfix skips to Construction phase. You must confirm the fix scope before invoki
    >
    > **What are you fixing?** Please describe the bug, issue, or refactor."
 3. WAIT for user to provide hotfix description
-4. **HALT** - Confirm scope:
+4. **HALT** - Discuss details and Pattern:
    > "Understood: {brief summary of hotfix}
    >
-   > **Hotfix Scope**:
-   > - Bug fix / Refactor / Minor improvement
-   > - Files affected: {if known}
+   > **Pattern Selection**:
+   > - **Pattern A (Transient UOW)**: Standalone fix, creates new UOW.
+   > - **Pattern B (Bolt Injection)**: Fix related to existing feature, injects bolt into existing UOW.
+   >
+   > **Which pattern should we use?** (If Pattern B, please specify the Target UOW ID)"
+5. WAIT for user to select pattern and confirm details
+6. **HALT** - Confirm Scope & Execution:
+   > "Summary:
+   > - **Fix**: {summary}
+   > - **Pattern**: {A or B}
+   > - **Context**: {Target UOW if Pattern B}
    >
    > **Do you want to proceed directly to Construction phase?** (yes/no)"
-5. (Only after user confirmation) INVOKE `@airsspec-builder` with hotfix context
+7. (Only after user confirmation) INVOKE `@airsspec-builder` with hotfix context AND pattern details
 6. WAIT for builder to complete
-7. Present completion summary:
+7. **Invoke `@airsspec-reviewer`** — Verify the fix
+   - If BLOCKS: Fix issues
+   - If PASSES: Proceed
+8. Present completion summary:
    > "✅ **Hotfix Complete**
    >
    > **Fixed**: {description of what was fixed}

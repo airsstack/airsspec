@@ -100,7 +100,6 @@ progress:
   total_bolts: 1
   completed_bolts: 0
 ```
-```
 
 **Continue to**: [Step 3: Define Fix Context](#step-3-define-fix-context)
 

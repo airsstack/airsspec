@@ -82,7 +82,7 @@ impl DefaultComplianceGate {
         let required = self.required_artifacts(to);
         if required.is_empty() {
             return true
-        
+        }
 
         // Check if all required artifact types are present
         required.iter().all(|artifact_type| {

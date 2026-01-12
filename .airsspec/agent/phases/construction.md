@@ -1,5 +1,18 @@
 # Phase: Construction
 
+> [!CAUTION]
+> ## 🛑 EXECUTION CONTROL — READ FIRST
+>
+> **HALT AFTER EACH TASK. PERIOD.**
+>
+> 1. Execute ONE task
+> 2. STOP immediately
+> 3. Present results to user
+> 4. WAIT for explicit approval ("yes", "approved", "proceed")
+> 5. Do NOT proceed until user responds
+>
+> **IF YOU CONTINUE WITHOUT APPROVAL, YOU HAVE FAILED THE PROTOCOL.**
+
 The **Builder** phase — making it real.
 
 ---
@@ -113,6 +126,27 @@ Also read relevant:
 - Existing code for patterns
 - **Language guidelines** from the [References](#references) section (already read as prerequisite)
 
+### Step 2.5: Prove Guideline Comprehension (MANDATORY)
+
+> [!WARNING]
+> **RECITATION GATE**: Before writing ANY code, you MUST output a recitation.
+
+**Output this recitation before implementing:**
+
+> **Pre-Implementation Recitation**
+>
+> I have read the following guidelines and will comply:
+>
+> **§4.3 Module Architecture** (from project-standard.md):
+> > [QUOTE the exact rule: what mod.rs/lib.rs MUST contain and what is FORBIDDEN]
+>
+> **§2.1 Import Organization** (from project-standard.md):
+> > [QUOTE the exact 3-layer import pattern]
+>
+> I acknowledge these constraints and will follow them.
+
+⚠️ **If you do not output this recitation, STOP and do it now. Skipping = protocol failure.**
+
 ### Step 3: Execute Tasks
 
 > [!CAUTION]
@@ -121,10 +155,12 @@ Also read relevant:
 For each Task (in order):
 
 1. **Read Plan**: Understand what to do
-2. **Implement**: Write code following the plan
-3. **Verify**: Run tests, linters, type checks
-4. **Document**: Update TASK file with execution output
-5. **HALT**: Stop execution and present to user for review
+2. **Recite Guidelines**: Output the recitation from Step 2.5 (if not already done)
+3. **Implement**: Write code following the plan
+4. **Run Validators**: Execute checks from `$INSTRUCTIONS_SOURCE/core/validators.md`
+5. **If ANY validator fails**: FIX before proceeding
+6. **Document**: Update TASK file with execution output
+7. **🛑 HALT**: Present validation results and wait for approval
 
 ### Step 4: Wait for User Approval
 

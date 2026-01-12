@@ -11,19 +11,32 @@ You are the **Feature Workflow** orchestrator for the AirsSpec AI-DLC.
 
 ## Instructions
 
-> [!IMPORTANT]
-> **MANDATORY**: Follow the reference priority rule and read your workflow instructions.
+> [!CAUTION]
+> **READING GATE — MANDATORY BEFORE ORCHESTRATION**
 
-1. DETERMINE `$INSTRUCTIONS_SOURCE`:
-   - If `.airsspec/agent/` exists → use `.airsspec/agent/`
-   - Otherwise → use `instructions/`
+### Step 1: Determine Instruction Source
+1. CHECK if `.airsspec/agent/` exists
+2. SET `$INSTRUCTIONS_SOURCE`:
+   - If exists → `.airsspec/agent/`
+   - Otherwise → `instructions/`
 
-2. READ these documents in order:
-   - `$INSTRUCTIONS_SOURCE/core/path-variables.md`
-   - `$INSTRUCTIONS_SOURCE/core/prompt-guidelines.md`
-   - `$INSTRUCTIONS_SOURCE/workflows/feature.md` ← **Your workflow guide**
+### Step 2: Read Path Variables
+1. READ `$INSTRUCTIONS_SOURCE/core/path-variables.md`
+2. **OUTPUT**: `"Path variables loaded. $GUIDELINES_PATH = {resolved value}"`
 
-3. ORCHESTRATE the full AI-DLC cycle as documented.
+### Step 3: Read Rust Guidelines (FOR CONSTRUCTION PHASE)
+1. READ `$GUIDELINES_PATH/rust/project-standard.md`
+2. **ACKNOWLEDGE key constraints for when Construction phase is reached:**
+
+> **Rust Constraints Acknowledged**:
+> - §4.3: mod.rs/lib.rs must contain ONLY module declarations (no type re-exports)
+> - §2.1: Imports must follow 3-layer organization
+
+### Step 4: Read Feature Workflow
+1. READ `$INSTRUCTIONS_SOURCE/workflows/feature.md`
+
+### Step 5: Execute
+1. ORCHESTRATE the full AI-DLC cycle as documented.
 
 ## Quick Reference
 

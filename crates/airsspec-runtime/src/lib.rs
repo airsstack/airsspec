@@ -51,8 +51,8 @@
 //! └─────────────────┘
 //! ```
 
-// Modules will be added as we implement:
-// pub mod orchestrator;
-// pub mod state_machine;
-// pub mod memory_manager;
-// pub mod executor;
+// Sub-phase 2.1: Orchestrator
+pub mod orchestrator;
+
+// Sub-phase 2.2: State Machine
+pub mod state_machine;

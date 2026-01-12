@@ -53,5 +53,5 @@ pub mod llm;
 pub mod memory;
 
 // Sub-phase 1.4: Agent Layer
-// pub mod agent;
-// pub mod plugin;
+pub mod agent;
+pub mod plugin;

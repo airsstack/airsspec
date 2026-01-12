@@ -42,6 +42,6 @@
 
 // Modules will be added as we implement:
 // pub mod frontmatter;
-// pub mod validators;
-// pub mod persistence;
+pub mod persistence;
+pub mod validators;
 // pub mod schemas;

@@ -38,3 +38,4 @@ walkdir.workspace = true
 
 [dev-dependencies]
 # Testing utilities will be added as needed
+tempfile.workspace = true

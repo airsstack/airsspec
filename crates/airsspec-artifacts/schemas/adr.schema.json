@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ADR Artifact Schema",
+  "description": "Schema for validating Architecture Decision Record artifact frontmatter",
+  "type": "object",
+  "required": ["id", "title", "status", "date", "uow_ref", "sub_phase"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the ADR (e.g., ADR-001)"
+    },
+    "title": {
+      "type": "string",
+      "description": "Title of the architecture decision"
+    },
+    "status": {
+      "type": "string",
+      "description": "Status of the decision (proposed, accepted, rejected, superseded)",
+      "enum": ["proposed", "accepted", "rejected", "superseded"]
+    },
+    "date": {
+      "type": "string",
+      "description": "Date of the decision in ISO 8601 format (YYYY-MM-DD)",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "uow_ref": {
+      "type": "string",
+      "description": "Reference to the parent Unit of Work"
+    },
+    "sub_phase": {
+      "type": "string",
+      "description": "Sub-phase identifier (e.g., '1.1', '1.2')"
+    },
+    "superseded_by": {
+      "type": "string",
+      "description": "ID of the ADR that supersedes this one (if superseded)"
+    }
+  }
+}

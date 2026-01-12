@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Bolt Plan Artifact Schema",
+  "description": "Schema for validating Bolt Plan artifact frontmatter",
+  "type": "object",
+  "required": ["id", "title", "steps", "verification", "objective"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Plan identifier (e.g., PLAN-001, PLAN-002)"
+    },
+    "title": {
+      "type": "string",
+      "description": "Title of the plan"
+    },
+    "objective": {
+      "type": "string",
+      "description": "Objective of the plan"
+    },
+    "context": {
+      "type": "object",
+      "description": "Context information for the plan (optional)",
+      "properties": {
+        "rfc_reference": {
+          "type": "string",
+          "description": "Reference to the RFC"
+        },
+        "crate": {
+          "type": "string",
+          "description": "Target crate for the plan"
+        }
+      },
+      "additionalProperties": false
+    },
+    "steps": {
+      "type": "array",
+      "description": "List of steps to execute",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "verification": {
+      "type": "array",
+      "description": "List of verification criteria",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    }
+  }
+}

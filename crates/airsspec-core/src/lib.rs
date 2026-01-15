@@ -16,6 +16,7 @@
 //! - [`llm`] - LLM provider traits
 //! - [`memory`] - Memory tier traits (Hot/Warm/Cold)
 //! - [`knowledge`] - Knowledge store and vector search traits
+//! - [`reasoning`] - Reasoning pattern abstractions
 //! - [`agent`] - Agent execution traits
 //! - [`plugin`] - Plugin loading traits
 //!
@@ -51,6 +52,7 @@ pub mod tool;
 pub mod knowledge;
 pub mod llm;
 pub mod memory;
+pub mod reasoning;
 
 // Sub-phase 1.4: Agent Layer
 pub mod agent;

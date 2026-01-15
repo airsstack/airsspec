@@ -81,7 +81,7 @@ impl DefaultComplianceGate {
     fn has_required_artifacts(&self, to: Phase, artifacts: &[ArtifactRef]) -> bool {
         let required = self.required_artifacts(to);
         if required.is_empty() {
-            return true
+            return true;
         }
 
         // Check if all required artifact types are present

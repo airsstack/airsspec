@@ -1,0 +1,14 @@
+id: BOLT-004-researcher-agent
+parent_uow: UOW-002-agent-system
+status: PENDING
+created_at: 2026-01-15T19:35:00+07:00
+updated_at: 2026-01-15T19:35:00+07:00
+
+progress:
+  total_tasks: 2
+  completed_tasks: 0
+
+depends_on:
+  - BOLT-003-agent-executor
+
+description: "First concrete agent that produces requirements.md artifacts"

@@ -1,9 +1,9 @@
 id: UOW-002-agent-system
 title: Agent System
-phase: Design
+phase: Planning
 status: in_progress
 created_at: 2026-01-12T16:56:00+07:00
-updated_at: 2026-01-12T17:44:00+07:00
+updated_at: 2026-01-15T18:33:00+07:00
 
 artifacts:
   requirements:
@@ -12,6 +12,39 @@ artifacts:
   daa:
     path: DAA.md
     status: approved
+  adrs:
+    - path: adrs/ADR-001-llm-integration.md
+      status: proposed
+    - path: adrs/ADR-002-tool-system.md
+      status: proposed
+    - path: adrs/ADR-003-agent-architecture.md
+      status: proposed
+  rfc:
+    path: RFC.md
+    status: draft
+  bolts:
+    - id: BOLT-001-llm-provider
+      path: bolts/BOLT-001-llm-provider
+      status: pending
+      total_tasks: 3
+      completed_tasks: 0
+    - id: BOLT-002-tool-system
+      path: bolts/BOLT-002-tool-system
+      status: pending
+      total_tasks: 4
+      completed_tasks: 0
+    - id: BOLT-003-agent-executor
+      path: bolts/BOLT-003-agent-executor
+      status: pending
+      total_tasks: 5
+      completed_tasks: 0
+      dependencies: [BOLT-001-llm-provider, BOLT-002-tool-system]
+    - id: BOLT-004-researcher-agent
+      path: bolts/BOLT-004-researcher-agent
+      status: pending
+      total_tasks: 2
+      completed_tasks: 0
+      dependencies: [BOLT-003-agent-executor]
 
 transitions:
   - from: Research
@@ -22,5 +55,7 @@ transitions:
     to: Design
     at: 2026-01-12T17:44:00+07:00
     reason: DAA approved by user
-    status: completed
-    required_for: Core traits (LLMProvider, Tool, Agent)
+  - from: Design
+    to: Planning
+    at: 2026-01-15T18:33:00+07:00
+    reason: All architectural decisions documented (3 ADRs completed)

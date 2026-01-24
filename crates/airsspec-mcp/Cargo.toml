@@ -1,0 +1,23 @@
+[package]
+name = "airsspec-mcp"
+description = "MCP server implementation and I/O layer for AirsSpec"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+readme = "README.md"
+keywords = ["mcp", "server", "protocol", "io"]
+categories = ["development-tools"]
+
+[dependencies]
+airsspec-core = { workspace = true }
+# TODO(Phase 5): Uncomment when ready to implement MCP server
+# airsprotocols-mcp = { workspace = true }
+tokio = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+[lints]
+workspace = true

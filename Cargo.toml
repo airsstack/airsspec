@@ -1,0 +1,85 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/airsspec-core",
+    "crates/airsspec-mcp",
+    "crates/airsspec-tui",
+    "crates/airsspec-cli",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+authors = ["AirS Stack <hello@airs.dev>"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/airsstack/airsspec"
+rust-version = "1.85"
+
+[workspace.dependencies]
+# Internal crates
+airsspec-core = { path = "crates/airsspec-core" }
+airsspec-mcp = { path = "crates/airsspec-mcp" }
+airsspec-tui = { path = "crates/airsspec-tui" }
+
+# MCP Protocol - DEFERRED to Phase 5
+# TODO(Phase 5): Uncomment when implementing MCP server (library has compilation errors with current toolchain)
+# airsprotocols-mcp = "1.0.0-rc.1"
+
+# Async runtime
+tokio = { version = "1", features = ["full"] }
+
+# Serialization
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+toml = "0.8"
+serde_yaml = "0.9"
+
+# CLI & TUI
+clap = { version = "4", features = ["derive"] }
+ratatui = "0.29"
+crossterm = "0.28"
+
+# Utilities
+thiserror = "1"
+anyhow = "1"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["json"] }
+uuid = { version = "1", features = ["v4"] }
+chrono = { version = "0.4", features = ["serde"] }
+slug = "0.1"
+
+# Allocator (for CLI binary)
+mimalloc = "0.1"
+
+[workspace.lints.rust]
+ambiguous_negative_literals = "warn"
+missing_debug_implementations = "warn"
+redundant_imports = "warn"
+redundant_lifetimes = "warn"
+trivial_numeric_casts = "warn"
+unsafe_op_in_unsafe_fn = "warn"
+unused_lifetimes = "warn"
+
+[workspace.lints.clippy]
+cargo = { level = "warn", priority = -1 }
+complexity = { level = "warn", priority = -1 }
+correctness = { level = "warn", priority = -1 }
+pedantic = { level = "warn", priority = -1 }
+perf = { level = "warn", priority = -1 }
+style = { level = "warn", priority = -1 }
+suspicious = { level = "warn", priority = -1 }
+
+# Restriction lints
+allow_attributes_without_reason = "warn"
+clone_on_ref_ptr = "warn"
+deref_by_slicing = "warn"
+empty_drop = "warn"
+empty_enum_variants_with_brackets = "warn"
+empty_structs_with_brackets = "warn"
+map_err_ignore = "warn"
+redundant_type_annotations = "warn"
+undocumented_unsafe_blocks = "warn"
+unused_result_ok = "warn"
+
+# Allow for external dependency issues (Phase 1)
+multiple_crate_versions = "allow"

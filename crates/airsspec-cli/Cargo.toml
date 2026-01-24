@@ -1,0 +1,23 @@
+[package]
+name = "airsspec-cli"
+description = "Command-line interface for AirsSpec - spec-driven development framework"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+readme = "README.md"
+keywords = ["cli", "spec", "workflow", "mcp"]
+categories = ["development-tools", "command-line-utilities"]
+
+[dependencies]
+airsspec-core = { workspace = true }
+airsspec-mcp = { workspace = true }
+airsspec-tui = { workspace = true }
+clap = { workspace = true }
+tokio = { workspace = true }
+mimalloc = { workspace = true }
+
+[lints]
+workspace = true

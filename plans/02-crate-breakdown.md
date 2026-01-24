@@ -1,14 +1,16 @@
 # AirsSpec Crate Breakdown
 
-**Version:** 1.0  
-**Date:** 2026-01-24  
-**Status:** Draft - Pending Review
+**Version:** 1.1  
+**Date:** 2026-01-25  
+**Status:** Revised - Modular Monolith Architecture
 
 ---
 
 ## Overview
 
 This document details the structure, responsibilities, and module organization for each AirsSpec crate. All designs follow the Rust guidelines specified in `.aiassisted/guidelines/rust/`.
+
+**Architecture Update (v1.1):** `airsspec-core` now follows a **modular monolith** pattern, organizing code by domain concepts (spec, plan, workspace) rather than technical layers (models, traits, validation).
 
 ---
 
@@ -111,48 +113,94 @@ Core domain logic, abstractions, and types. This crate contains **zero I/O opera
 
 ### Design Principles
 
-Following DIP (Dependency Inversion Principle):
+Following DIP (Dependency Inversion Principle) + Modular Monolith:
 - **All abstractions (traits) live here**
 - No external runtime dependencies (tokio, etc.) in public API
 - Other crates depend on these abstractions
-- Implementations may exist here but are not required
+- **Organized by domain concepts** (spec, plan, workspace) not technical layers
+- Each module is self-contained with high cohesion
 
 ### Module Structure
+
+**Organization Philosophy: Modular Monolith**
+
+`airsspec-core` follows a **modular monolith** architecture, organizing code by **domain concepts** rather than technical layers. This approach:
+
+- **Groups related code together** - Everything about `spec` lives in `spec/`
+- **Increases cohesion** - Models, traits, and validation for one domain stay together
+- **Improves discoverability** - "Where's Spec validation?" → `spec/validator.rs`
+- **Mirrors business language** - Module names match domain concepts
+- **Enables independent evolution** - Each module can evolve independently
 
 ```
 crates/airsspec-core/
 ├── Cargo.toml
 └── src/
-    ├── lib.rs                    # Crate root with module exports
-    ├── models/                   # Domain models
+    ├── lib.rs                    # Crate root, public API, re-exports
+    │
+    ├── shared/                   # Shared cross-cutting types
     │   ├── mod.rs
-    │   ├── spec.rs               # Spec, SpecId, SpecMetadata
-    │   ├── plan.rs               # Plan, PlanStep
-    │   ├── state.rs              # WorkflowState, LifecycleState
+    │   ├── lifecycle.rs          # LifecycleState enum
+    │   └── phase.rs              # Phase enum
+    │
+    ├── spec/                     # Spec domain module
+    │   ├── mod.rs                # Module exports
+    │   ├── id.rs                 # SpecId, SpecIdParseError
+    │   ├── spec.rs               # Spec, SpecMetadata types
+    │   ├── builder.rs            # SpecBuilder
+    │   ├── category.rs           # Category enum
+    │   ├── dependency.rs         # Dependency, DependencyKind
+    │   ├── storage.rs            # SpecStorage trait
+    │   ├── validator.rs          # Spec-specific validation
+    │   └── error.rs              # SpecError
+    │
+    ├── plan/                     # Plan domain module
+    │   ├── mod.rs
+    │   ├── plan.rs               # Plan type
+    │   ├── builder.rs            # PlanBuilder
+    │   ├── step.rs               # PlanStep, StepStatus, Complexity
+    │   ├── storage.rs            # PlanStorage trait
+    │   ├── validator.rs          # Plan-specific validation
+    │   └── error.rs              # PlanError
+    │
+    ├── workspace/                # Workspace domain module
+    │   ├── mod.rs
     │   ├── config.rs             # ProjectConfig
-    │   └── dependency.rs         # Dependency, DependencyKind
-    ├── traits/                   # Abstraction traits
+    │   ├── info.rs               # WorkspaceInfo
+    │   ├── provider.rs           # WorkspaceProvider trait
+    │   └── error.rs              # WorkspaceError
+    │
+    ├── state/                    # State machine (cross-cutting)
     │   ├── mod.rs
-    │   ├── workspace.rs          # WorkspaceProvider trait
-    │   ├── storage.rs            # SpecStorage, StateStorage traits
-    │   ├── validation.rs         # Validator trait
-    │   └── id_generator.rs       # IdGenerator trait
-    ├── state/                    # Lifecycle state machine
+    │   ├── workflow.rs           # WorkflowState type
+    │   ├── machine.rs            # State machine, transition rules
+    │   └── progress.rs           # BuildProgress
+    │
+    ├── validation/               # Validation framework (cross-cutting)
     │   ├── mod.rs
-    │   └── machine.rs        # Transition rules
-    ├── validation/               # Validation implementations
-    │   ├── mod.rs
-    │   ├── report.rs             # ValidationReport, ValidationError
-    │   ├── structure.rs          # DirectoryStructureValidator
-    │   ├── content.rs            # SpecContentValidator
-    │   ├── dependencies.rs       # DependencyValidator
-    │   └── state.rs              # StateTransitionValidator
-    ├── utils/                    # Utility functions
-    │   ├── mod.rs
-    │   ├── slug.rs               # Slug generation
-    │   └── id.rs                 # SpecId generation
-    └── error.rs                  # Core error types
+    │   ├── validator.rs          # Validator trait (abstract interface)
+    │   ├── report.rs             # ValidationReport
+    │   ├── context.rs            # ValidationContext
+    │   └── error.rs              # ValidationError
+    │
+    └── utils/                    # Pure utilities (cross-cutting)
+        ├── mod.rs
+        ├── slug.rs               # Slug generation
+        └── id.rs                 # ID generation utilities
 ```
+
+**Module Categories:**
+
+1. **Domain Modules** (`spec/`, `plan/`, `workspace/`)
+   - Self-contained vertical slices
+   - Each contains: models, builders, traits, validators, errors
+   - High cohesion within module
+   - Clear domain boundaries
+
+2. **Shared Infrastructure** (`shared/`, `state/`, `validation/`, `utils/`)
+   - Cross-cutting concerns used by multiple domains
+   - Framework-level functionality
+   - Pure utilities with no domain knowledge
 
 ### `Cargo.toml`
 
@@ -179,23 +227,24 @@ chrono = { workspace = true }
 ### Key Types
 
 ```rust
-// models/spec.rs
+// spec/id.rs
 /// Unique identifier for a specification.
 /// Format: {unix-timestamp}-{title-slug}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub struct SpecId(String);
 
+// spec/spec.rs
 /// A specification document with metadata.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Spec {
     pub id: SpecId,
     pub metadata: SpecMetadata,
     pub content: String,
 }
 
-// models/state.rs
-/// Lifecycle states for a specification.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+// shared/lifecycle.rs
+/// Lifecycle states for specifications and plans.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum LifecycleState {
     Draft,
     Active,
@@ -209,7 +258,16 @@ pub enum LifecycleState {
 ### Key Traits
 
 ```rust
-// traits/workspace.rs
+// spec/storage.rs
+/// Abstraction for spec persistence.
+pub trait SpecStorage: Send + Sync {
+    fn load_spec(&self, id: &SpecId) -> Result<Option<Spec>, SpecError>;
+    fn save_spec(&self, spec: &Spec) -> Result<(), SpecError>;
+    fn list_specs(&self) -> Result<Vec<SpecId>, SpecError>;
+    fn delete_spec(&self, id: &SpecId) -> Result<(), SpecError>;
+}
+
+// workspace/provider.rs
 /// Abstraction for workspace operations.
 pub trait WorkspaceProvider: Send + Sync {
     /// Discover workspace from a starting path.
@@ -219,22 +277,75 @@ pub trait WorkspaceProvider: Send + Sync {
     fn initialize(&self, path: &Path, config: &ProjectConfig) -> Result<(), WorkspaceError>;
 }
 
-// traits/storage.rs
-/// Abstraction for spec persistence.
-pub trait SpecStorage: Send + Sync {
-    fn load_spec(&self, id: &SpecId) -> Result<Option<Spec>, StorageError>;
-    fn save_spec(&self, spec: &Spec) -> Result<(), StorageError>;
-    fn list_specs(&self) -> Result<Vec<SpecId>, StorageError>;
-    fn delete_spec(&self, id: &SpecId) -> Result<(), StorageError>;
-}
-
-// traits/validation.rs
+// validation/validator.rs
 /// Abstraction for validation logic.
 pub trait Validator: Send + Sync {
     /// Validate and return a report (permissive - collects all errors).
     fn validate(&self, context: &ValidationContext) -> ValidationReport;
 }
 ```
+
+### Public API Design
+
+The `lib.rs` provides a clean public API with convenient re-exports:
+
+```rust
+// src/lib.rs
+
+//! # airsspec-core
+//!
+//! Pure domain logic for AirsSpec, organized by domain concepts.
+//!
+//! ## Architecture: Modular Monolith
+//!
+//! This crate follows a modular monolith pattern, grouping code by domain
+//! concepts (spec, plan, workspace) rather than technical layers.
+//!
+//! ## Modules
+//!
+//! ### Domain Modules
+//! - [`spec`] - Specification domain (models, storage, validation)
+//! - [`plan`] - Plan domain (models, storage, validation)
+//! - [`workspace`] - Workspace domain (configuration, discovery)
+//!
+//! ### Infrastructure Modules
+//! - [`shared`] - Shared types used across domains
+//! - [`state`] - State machine and lifecycle management
+//! - [`validation`] - Validation framework
+//! - [`utils`] - Pure utility functions
+
+// Domain modules
+pub mod spec;
+pub mod plan;
+pub mod workspace;
+
+// Infrastructure modules
+pub mod shared;
+pub mod state;
+pub mod validation;
+pub mod utils;
+
+// Convenience re-exports for common types
+pub use spec::{Spec, SpecId, SpecMetadata, Category, Dependency, SpecStorage};
+pub use plan::{Plan, PlanStep, StepStatus, Complexity, PlanStorage};
+pub use workspace::{ProjectConfig, WorkspaceInfo, WorkspaceProvider};
+pub use shared::{LifecycleState, Phase};
+pub use state::{WorkflowState, StateMachine};
+pub use validation::{ValidationReport, Validator};
+```
+
+**Usage by consumers:**
+
+```rust
+// Option 1: Use re-exports (clean, common types)
+use airsspec_core::{Spec, SpecId, SpecStorage};
+
+// Option 2: Use module paths (explicit, less common types)
+use airsspec_core::spec::{SpecBuilder, SpecError};
+use airsspec_core::validation::{ValidationContext, Validator};
+```
+
+---
 
 ---
 

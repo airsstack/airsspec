@@ -1,166 +1,137 @@
 # AirsSpec
 
-**The Agentic Spec-Driven Development Framework**
+**Lightweight Spec-Driven Development Framework**
 
-AirsSpec is a unified framework for **Research-Driven Development**. It bridges the gap between high-level knowledge synthesis (inspired by Google NotebookLM) and low-level execution (inspired by Spec Kit and OpenSpec).
-
-It serves as the **technical engine** for the [**AirSDLC Methodology**](AIRSDLC.md), orchestrating the entire lifecycle through the **Model Context Protocol (MCP)**.
+AirsSpec is a minimal, extensible framework for specification-driven development. It provides a simple 3-phase workflow that scales from quick fixes to complex features through a plugin system.
 
 ---
 
-## 🤖 What Makes AirsSpec Different?
+## Core Philosophy
 
-AirsSpec is an **Agentic Spec Framework** — it doesn't just define specifications, it **executes them through AI agents**.
+> **"Simple by default, powerful when needed."**
 
-| Framework | Approach | Agent Integration |
-|-----------|----------|-------------------|
-| **GitHub SpecKit** | Spec templates for human developers | Passive (specs read by humans) |
-| **OpenSpec** | Structured specs for AI context | Passive (specs fed to AI) |
-| **AirsSpec** | Agentic spec-driven lifecycle | **Active (agents orchestrate specs)** |
+AirsSpec avoids the complexity of heavyweight methodologies. Instead of rigid phases and mandatory artifacts, it provides:
 
-### Key Differentiators
-
-1. **Agentic Execution**: Specs aren't just documentation — they're executable contracts that AI agents actively follow through a 6-phase lifecycle.
-
-2. **Phase-Locked Agents**: Each phase has specialized agents with constrained tools (Cognitive Cleanroom), preventing context pollution.
-
-3. **Filesystem as Truth**: All state lives on disk in `.airsspec/`. The TUI/CLI is just a view — agents work directly with artifacts.
-
-4. **Gate-Based Progression**: Human approval gates between phases ensure AI proposals are validated before execution.
-
-5. **Self-Orchestrating**: AirsSpec agents can invoke other agents, creating a coordinated multi-agent workflow.
+- A **3-phase core workflow** that covers 90% of development tasks
+- A **plugin hook system** that adds ceremony only when needed
+- **Universal compatibility** with any AI coding tool via AGENTS.md generation
 
 ---
 
-## 🚀 Vision
-
-AirsSpec moves beyond "AI coding assistants" to **Spec-Driven Engineering**. In this paradigm, precise markdown specifications are not just documentation—they are **executable contracts** that drive the AI agents.
-
-By combining the **AWS AI-Driven Development Lifecycle (AI-DLC)** with rigorous **Spec-Driven Development (SDD)**, AirsSpec ensures that AI agents act as reliable engineers, not just unpredictable chatbots.
-
-## 🌟 Core Philosophy
-
-> **"No Code without Spec, No Spec without Knowledge."**
-
-AirsSpec enforces the **AirSDLC Manifesto**:
-1.  **Traceability**: Every line of code traces back to a **Bolt**, which traces to an **ADR**, which traces to a **DAA**, which traces to the **PRD**.
-2.  **Context Isolation**: Agents act through an "MCP Firewall," accessing only verified knowledge, not raw file systems.
-3.  **Human Validation**: AI proposes plans and models; Humans validate them before execution.
-
-## 🏗️ Foundation: AirSDLC & AWS AI-DLC
-
-AirsSpec operationalizes the **AirSDLC** framework, which is an implementation of the **AWS AI-Driven Development Lifecycle (AI-DLC)**. It brings structure to AI development through specific artifacts and workflows:
-
-*   **Bolts**: Atomic units of work (replacing sprints).
-*   **Mob Elaboration/Construction**: Real-time human-AI validation loops.
-*   **Dual Workflow**: Supporting both "Full" (DAA-based) and "Lightweight" (TIP-based) paths.
-
----
-
-## 📦 AI-DLC Phases
-
-AirsSpec implements a **6-phase AI Development Lifecycle**:
-
-| Phase | Name | Goal | Artifact |
-|-------|------|------|----------|
-| 0 | **Ingestion** | Load knowledge sources | Sources cataloged |
-| 1 | **Research** | Define requirements | `requirements.md` |
-| 2 | **Inception** | Define domain model | `DAA.md` |
-| 3 | **Design** | Define architecture | `ADR-*.md` |
-| 4 | **Planning** | Define execution strategy | `RFC.md`, `bolts/` |
-| 5 | **Construction** | Build & verify | Source code |
-
-Each phase has **gate conditions** that must be satisfied before proceeding.
-
-> 🐕 **Dogfooding**: AirsSpec uses its own workflows to develop itself. The framework is built using the same AI-DLC phases and agent integrations it provides.
-
----
-
-## 📂 Project Structure
+## Core Workflow
 
 ```
-airsspec/
-├── docs/                    # Architecture documentation
-│   ├── ai-dlc-phases.md     # Phase definitions
-│   ├── architecture.md      # System architecture
-│   ├── uow-bolt-spec.md     # UOW & Bolt specification
-│   └── ...
-├── instructions/            # AI agent instructions
-│   ├── core/               # Foundation & setup
-│   ├── phases/             # Phase-specific guides
-│   └── workflows/          # End-to-end workflows
-├── templates/               # Artifact templates
-│   ├── uow/                # UOW artifacts (requirements, DAA, ADR, RFC)
-│   └── bolt/               # Bolt artifacts (PLAN, TASK)
-├── .opencode/agent/        # OpenCode custom agents
-├── .agent/workflows/       # AntiGravity workflows
-└── AGENTS.md               # Agent instructions (cross-platform)
+┌──────────┐      ┌──────────┐      ┌──────────┐
+│   SPEC   │ ───► │   PLAN   │ ───► │  BUILD   │
+└──────────┘      └──────────┘      └──────────┘
+  What & Why       How & Steps       Execute
+```
+
+| Phase | Purpose | Output |
+|-------|---------|--------|
+| **Spec** | Define what to build and why | `spec.md` |
+| **Plan** | Break down into actionable steps | `plan.md` |
+| **Build** | Execute the plan | Code changes |
+
+---
+
+## Plugin Architecture
+
+Plugins extend the core workflow through 6 hook points:
+
+```
+before:spec  → [SPEC]  → after:spec
+before:plan  → [PLAN]  → after:plan
+before:build → [BUILD] → after:build
+```
+
+### Example Plugins
+
+| Plugin | Hook | Purpose |
+|--------|------|---------|
+| `@airsspec/research` | `before:spec` | Gather requirements before spec |
+| `@airsspec/design` | `before:plan` | Create architecture decisions |
+| `@airsspec/gate` | `after:spec`, `after:plan` | Add human approval gates |
+| `@airsspec/review` | `after:build` | Code review and quality checks |
+
+Plugins define ceremony implicitly. A simple bug fix uses no plugins (just Spec → Plan → Build). A major feature might use research, design, and review plugins.
+
+---
+
+## Format Strategy
+
+| Purpose | Format | File |
+|---------|--------|------|
+| Project config | TOML | `.airsspec/config.toml` |
+| Spec metadata | YAML frontmatter | `spec.md`, `plan.md` |
+| Workflow state | TOON | `state.toon` |
+
+**Why these formats?**
+
+- **TOML**: Human-readable config, well-supported in Rust
+- **YAML frontmatter**: Familiar to developers, clean separation of metadata and content
+- **TOON**: Token-efficient (~40% smaller than JSON), machine-managed state
+
+---
+
+## Directory Structure
+
+```
+.airsspec/
+├── config.toml              # Project configuration
+├── specs/
+│   └── {spec-id}/
+│       ├── state.toon       # Workflow state (machine-managed)
+│       ├── spec.md          # What & Why
+│       └── plan.md          # How & Steps
+├── schemas/                 # Artifact JSON schemas (optional)
+└── plugins/                 # Local plugin definitions (optional)
 ```
 
 ---
 
-## 🛠️ Agent Integration
+## Spec Lifecycle
 
-AirsSpec provides custom agents and workflows for AI coding tools:
+```
+draft ──► active ──► done ──► archived
+             │
+             └──► blocked
+             └──► cancelled
+```
 
-### OpenCode Agents
-
-Invoke with `@agent_name`:
-
-| Agent | Purpose |
+| State | Meaning |
 |-------|---------|
-| `@airsspec` | Main orchestrator |
-| `@airsspec-feature` | Full AI-DLC cycle |
-| `@airsspec-hotfix` | Fast track for fixes |
-| `@git-commit` | Conventional Commits |
-
-### AntiGravity Workflows
-
-Invoke with `/workflow`:
-
-| Workflow | Purpose |
-|----------|---------|
-| `/airsspec` | Main guide |
-| `/airsspec-feature` | Full AI-DLC cycle |
-| `/airsspec-hotfix` | Fast track for fixes |
-| `/git-commit` | Conventional Commits |
+| `draft` | Work in progress, not ready |
+| `active` | Being worked on |
+| `done` | Completed successfully |
+| `archived` | Preserved for reference |
+| `blocked` | Waiting on dependencies |
+| `cancelled` | Abandoned |
 
 ---
 
-## 📚 Documentation
+## Dependencies
 
-| Document | Description |
-|----------|-------------|
-| [AI-DLC Phases](docs/ai-dlc-phases.md) | 6-phase lifecycle details |
-| [Architecture](docs/architecture.md) | System design |
-| [UOW & Bolt Spec](docs/uow-bolt-spec.md) | Work unit architecture |
-| [User Journey](docs/user-journey-and-workflow.md) | User experience flow |
-| [Multi-Agent Architecture](docs/multi-agent-architecture.md) | Agent coordination |
-| [Instructions](instructions/README.md) | AI agent instructions |
+Specs can declare dependencies on other specs:
+
+- **Hard dependencies**: Block progression until resolved
+- **Soft dependencies**: Informational only, don't block
 
 ---
 
-## 🚦 Getting Started
+## Status
 
-1. **For AI Agents**: Start with `instructions/core/README.md`
-2. **For Humans**: Read `docs/user-journey-and-workflow.md`
-3. **Initialize Workspace**: Run `/airsspec-setup` (AntiGravity) or follow `instructions/core/workspace-setup.md`
+AirsSpec is in early development. The Rust CLI is planned but not yet implemented.
 
----
+### Inspiration
 
-## 📝 Contributing
-
-Commits follow [Conventional Commits](https://www.conventionalcommits.org/):
-
-```
-<type>(<scope>): <description>
-```
-
-Types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`
+- [GitHub Spec-Kit](https://github.com/github/spec-kit) - Structured specification phases
+- [OpenSpec](https://github.com/Fission-AI/OpenSpec) - Lightweight, change-centric approach
+- [TOON Format](https://github.com/toon-format/toon) - Token-efficient serialization
 
 ---
 
-## 📄 License
+## License
 
 Licensed under either of:
 

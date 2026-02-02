@@ -17,3 +17,5 @@ target
 # Memory bank (AI session context - not tracked)
 .memory-bank/
 .opencode/
+.claude
+.aiassisted

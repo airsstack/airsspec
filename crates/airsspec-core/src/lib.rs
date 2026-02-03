@@ -18,12 +18,12 @@
 //!
 //! - [`spec`] - Specification domain (`Spec`, `SpecId`, `SpecBuilder`, `Category`, `Dependency`, errors)
 //! - [`plan`] - Plan domain (`Plan`, `PlanStep`, `PlanBuilder`, `StepStatus`, `Complexity`)
+//! - [`shared`] - Cross-cutting types (`LifecycleState`, `Phase`)
+//! - [`state`] - State machine and workflow tracking (`StateMachine`, `WorkflowState`, `BuildProgress`)
 //!
 //! ### Future Modules (Phase 2)
 //!
 //! - `workspace/` - Workspace domain (`ProjectConfig`, `WorkspaceProvider`)
-//! - `shared/` - Shared types (`LifecycleState`, `Phase`)
-//! - `state/` - State machine and transitions
 //! - `validation/` - Validation framework
 //! - `utils/` - Pure utilities
 //!
@@ -45,6 +45,8 @@
 //!     validate_spec,
 //! };
 //! use airsspec_core::plan::{Plan, PlanStep, PlanBuilder, validate_plan};
+//! use airsspec_core::shared::{LifecycleState, Phase};
+//! use airsspec_core::state::{StateMachine, WorkflowState, BuildProgress};
 //!
 //! // Create a spec using the builder
 //! let spec = SpecBuilder::new()
@@ -74,7 +76,7 @@
 //!
 //! // Create a plan for the spec
 //! let plan = PlanBuilder::new()
-//!     .spec_id(id)
+//!     .spec_id(id.clone())
 //!     .approach("Incremental implementation")
 //!     .step(PlanStep::new(0, "Setup database", "Create schema"))
 //!     .step(PlanStep::new(1, "Implement API", "Create endpoints"))
@@ -86,18 +88,39 @@
 //! // Validate the plan
 //! let plan_report = validate_plan(&plan);
 //! assert!(plan_report.is_valid());
+//!
+//! // Use lifecycle states
+//! let state = LifecycleState::Draft;
+//! assert!(!state.is_terminal());
+//!
+//! // Use workflow phases
+//! let phase = Phase::Spec;
+//! assert_eq!(phase.next(), Some(Phase::Plan));
+//!
+//! // Use the state machine
+//! let machine = StateMachine::new();
+//! assert!(machine.can_transition(LifecycleState::Draft, LifecycleState::Active));
+//!
+//! // Track workflow state
+//! let mut workflow = WorkflowState::new(id);
+//! workflow.set_lifecycle(LifecycleState::Active);
+//! assert_eq!(workflow.lifecycle(), LifecycleState::Active);
 //! ```
 
 pub mod plan;
+pub mod shared;
 pub mod spec;
+pub mod state;
 
 // Convenience re-exports for common types
 pub use plan::{
     Complexity, Plan, PlanBuilder, PlanError, PlanStep, PlanStorage, PlanStorageExt, StepBuilder,
     StepStatus, validate_plan,
 };
+pub use shared::{LifecycleState, Phase};
 pub use spec::{
     Category, Dependency, DependencyKind, Spec, SpecBuilder, SpecError, SpecId, SpecMetadata,
     SpecStorage, SpecStorageExt, ValidationIssue, ValidationReport, ValidationSeverity,
     validate_spec,
 };
+pub use state::{BuildProgress, StateError, StateMachine, WorkflowState};

@@ -16,7 +16,7 @@
 //!
 //! ### Domain Modules
 //!
-//! - [`spec`] - Specification domain (`SpecId`, `Category`, `Dependency`, errors)
+//! - [`spec`] - Specification domain (`Spec`, `SpecId`, `SpecBuilder`, `Category`, `Dependency`, errors)
 //!
 //! ### Future Modules (Phase 2)
 //!
@@ -39,9 +39,27 @@
 //! ## Examples
 //!
 //! ```
-//! use airsspec_core::spec::{SpecId, Category, Dependency, DependencyKind};
+//! use airsspec_core::spec::{
+//!     Spec, SpecId, SpecBuilder, SpecMetadata,
+//!     Category, Dependency, DependencyKind,
+//!     validate_spec,
+//! };
 //!
-//! // Create a spec ID
+//! // Create a spec using the builder
+//! let spec = SpecBuilder::new()
+//!     .title("User Authentication")
+//!     .description("Implement OAuth2 login")
+//!     .category(Category::Feature)
+//!     .build()
+//!     .unwrap();
+//!
+//! assert_eq!(spec.title(), "User Authentication");
+//!
+//! // Validate the spec
+//! let report = validate_spec(&spec);
+//! assert!(report.is_valid());
+//!
+//! // Create a spec ID directly
 //! let id = SpecId::new(1_737_734_400, "user-auth");
 //! assert_eq!(id.timestamp(), 1_737_734_400);
 //! assert_eq!(id.slug(), "user-auth");
@@ -57,4 +75,8 @@
 pub mod spec;
 
 // Convenience re-exports for common types
-pub use spec::{Category, Dependency, DependencyKind, SpecError, SpecId};
+pub use spec::{
+    Category, Dependency, DependencyKind, Spec, SpecBuilder, SpecError, SpecId, SpecMetadata,
+    SpecStorage, SpecStorageExt, ValidationIssue, ValidationReport, ValidationSeverity,
+    validate_spec,
+};

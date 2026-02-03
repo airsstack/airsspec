@@ -17,10 +17,10 @@
 //! ### Domain Modules
 //!
 //! - [`spec`] - Specification domain (`Spec`, `SpecId`, `SpecBuilder`, `Category`, `Dependency`, errors)
+//! - [`plan`] - Plan domain (`Plan`, `PlanStep`, `PlanBuilder`, `StepStatus`, `Complexity`)
 //!
 //! ### Future Modules (Phase 2)
 //!
-//! - `plan/` - Plan domain (`Plan`, `PlanStep`, `PlanBuilder`)
 //! - `workspace/` - Workspace domain (`ProjectConfig`, `WorkspaceProvider`)
 //! - `shared/` - Shared types (`LifecycleState`, `Phase`)
 //! - `state/` - State machine and transitions
@@ -44,6 +44,7 @@
 //!     Category, Dependency, DependencyKind,
 //!     validate_spec,
 //! };
+//! use airsspec_core::plan::{Plan, PlanStep, PlanBuilder, validate_plan};
 //!
 //! // Create a spec using the builder
 //! let spec = SpecBuilder::new()
@@ -70,11 +71,31 @@
 //! // Create a dependency
 //! let dep = Dependency::blocked_by(id.clone());
 //! assert_eq!(dep.kind, DependencyKind::BlockedBy);
+//!
+//! // Create a plan for the spec
+//! let plan = PlanBuilder::new()
+//!     .spec_id(id)
+//!     .approach("Incremental implementation")
+//!     .step(PlanStep::new(0, "Setup database", "Create schema"))
+//!     .step(PlanStep::new(1, "Implement API", "Create endpoints"))
+//!     .build()
+//!     .unwrap();
+//!
+//! assert_eq!(plan.step_count(), 2);
+//!
+//! // Validate the plan
+//! let plan_report = validate_plan(&plan);
+//! assert!(plan_report.is_valid());
 //! ```
 
+pub mod plan;
 pub mod spec;
 
 // Convenience re-exports for common types
+pub use plan::{
+    Complexity, Plan, PlanBuilder, PlanError, PlanStep, PlanStorage, PlanStorageExt, StepBuilder,
+    StepStatus, validate_plan,
+};
 pub use spec::{
     Category, Dependency, DependencyKind, Spec, SpecBuilder, SpecError, SpecId, SpecMetadata,
     SpecStorage, SpecStorageExt, ValidationIssue, ValidationReport, ValidationSeverity,

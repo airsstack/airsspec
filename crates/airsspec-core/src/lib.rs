@@ -21,10 +21,13 @@
 //! - [`shared`] - Cross-cutting types (`LifecycleState`, `Phase`)
 //! - [`state`] - State machine and workflow tracking (`StateMachine`, `WorkflowState`, `BuildProgress`)
 //!
+//! ### Framework Modules
+//!
+//! - [`validation`] - Validation framework (`ValidationReport`, `ValidationIssue`, `Validator` trait)
+//!
 //! ### Future Modules (Phase 2)
 //!
 //! - `workspace/` - Workspace domain (`ProjectConfig`, `WorkspaceProvider`)
-//! - `validation/` - Validation framework
 //! - `utils/` - Pure utilities
 //!
 //! ## Dependencies
@@ -47,6 +50,7 @@
 //! use airsspec_core::plan::{Plan, PlanStep, PlanBuilder, validate_plan};
 //! use airsspec_core::shared::{LifecycleState, Phase};
 //! use airsspec_core::state::{StateMachine, WorkflowState, BuildProgress};
+//! use airsspec_core::validation::{Validator, ValidatorExt, ValidationContext};
 //!
 //! // Create a spec using the builder
 //! let spec = SpecBuilder::new()
@@ -111,6 +115,7 @@ pub mod plan;
 pub mod shared;
 pub mod spec;
 pub mod state;
+pub mod validation;
 
 // Convenience re-exports for common types
 pub use plan::{
@@ -120,7 +125,12 @@ pub use plan::{
 pub use shared::{LifecycleState, Phase};
 pub use spec::{
     Category, Dependency, DependencyKind, Spec, SpecBuilder, SpecError, SpecId, SpecMetadata,
-    SpecStorage, SpecStorageExt, ValidationIssue, ValidationReport, ValidationSeverity,
-    validate_spec,
+    SpecStorage, SpecStorageExt, validate_spec,
 };
 pub use state::{BuildProgress, StateError, StateMachine, WorkflowState};
+
+// Validation framework re-exports
+pub use validation::{
+    ValidationContext, ValidationContextBuilder, ValidationIssue, ValidationReport,
+    ValidationSeverity, Validator, ValidatorExt,
+};

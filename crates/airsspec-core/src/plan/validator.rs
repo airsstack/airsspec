@@ -1,13 +1,15 @@
 //! Plan-specific validation logic.
 //!
-//! This module provides validation for implementation plans.
-//! It reuses validation types from the spec module for consistency.
+//! This module provides validation for implementation plans
+//! using the validation framework from [`crate::validation`].
+
+use std::collections::HashSet;
 
 use super::step::StepStatus;
 use super::types::Plan;
 
-// Re-export validation types from spec module for convenience
-pub use crate::spec::{ValidationIssue, ValidationReport, ValidationSeverity};
+// Re-export validation types from validation module for convenience
+pub use crate::validation::{ValidationIssue, ValidationReport, ValidationSeverity};
 
 /// Validates a plan and returns a report of any issues.
 ///
@@ -104,7 +106,7 @@ fn validate_step_indices(plan: &Plan, report: &mut ValidationReport) {
     }
 
     // Check for duplicate indices
-    let mut seen_indices = std::collections::HashSet::new();
+    let mut seen_indices = HashSet::new();
     for (pos, step) in steps.iter().enumerate() {
         if !seen_indices.insert(step.index()) {
             report.add_issue(
@@ -195,7 +197,7 @@ mod tests {
             report
                 .errors()
                 .iter()
-                .any(|e| e.message.contains("at least one step"))
+                .any(|e| e.message().contains("at least one step"))
         );
     }
 
@@ -213,7 +215,7 @@ mod tests {
             report
                 .warnings()
                 .iter()
-                .any(|w| w.message.contains("Approach"))
+                .any(|w| w.message().contains("Approach"))
         );
     }
 
@@ -235,7 +237,7 @@ mod tests {
             report
                 .warnings()
                 .iter()
-                .any(|w| w.message.contains("expected"))
+                .any(|w| w.message().contains("expected"))
         );
     }
 
@@ -257,7 +259,7 @@ mod tests {
             report
                 .errors()
                 .iter()
-                .any(|e| e.message.contains("title cannot be empty"))
+                .any(|e| e.message().contains("title cannot be empty"))
         );
     }
 
@@ -272,7 +274,7 @@ mod tests {
 
         let report = validate_plan(&plan);
         assert!(report.is_valid()); // Warning only
-        assert!(report.warnings().iter().any(|w| w.message.contains("long")));
+        assert!(report.warnings().iter().any(|w| w.message().contains("long")));
     }
 
     #[test]
@@ -286,7 +288,7 @@ mod tests {
         let report = validate_plan(&plan);
         assert!(report.is_valid()); // Info only
         assert!(report.issues().iter().any(|i| {
-            i.severity == ValidationSeverity::Info && i.message.contains("no description")
+            i.severity() == ValidationSeverity::Info && i.message().contains("no description")
         }));
     }
 
@@ -305,7 +307,7 @@ mod tests {
             report
                 .warnings()
                 .iter()
-                .any(|w| w.message.contains("Blocked step"))
+                .any(|w| w.message().contains("Blocked step"))
         );
     }
 
@@ -328,7 +330,7 @@ mod tests {
             !report
                 .warnings()
                 .iter()
-                .any(|w| w.message.contains("Blocked step"))
+                .any(|w| w.message().contains("Blocked step"))
         );
     }
 }

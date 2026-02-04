@@ -1,220 +1,15 @@
 //! Spec-specific validation logic.
 //!
-//! This module provides validation for specifications. The `ValidationReport`
-//! struct is a placeholder that will be replaced by the full validation framework
-//! in Task 2.5.
+//! This module provides validation for specifications using the
+//! validation framework from [`crate::validation`].
+
+use std::collections::HashSet;
 
 use super::types::Spec;
 
-/// Severity level for validation issues.
-///
-/// Indicates how serious a validation issue is.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-pub enum ValidationSeverity {
-    /// Informational message, not a problem.
-    Info,
-    /// Warning that should be addressed but doesn't block.
-    Warning,
-    /// Error that must be fixed.
-    Error,
-}
-
-impl std::fmt::Display for ValidationSeverity {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let s = match self {
-            Self::Info => "info",
-            Self::Warning => "warning",
-            Self::Error => "error",
-        };
-        write!(f, "{s}")
-    }
-}
-
-/// A single validation issue found during spec validation.
-///
-/// Contains information about what was wrong and where.
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub struct ValidationIssue {
-    /// The severity of this issue.
-    pub severity: ValidationSeverity,
-
-    /// A human-readable message describing the issue.
-    pub message: String,
-
-    /// Optional field name or path where the issue was found.
-    pub field: Option<String>,
-}
-
-impl ValidationIssue {
-    /// Creates a new validation issue.
-    #[must_use]
-    pub fn new(severity: ValidationSeverity, message: impl Into<String>) -> Self {
-        Self {
-            severity,
-            message: message.into(),
-            field: None,
-        }
-    }
-
-    /// Creates a new info-level issue.
-    #[must_use]
-    pub fn info(message: impl Into<String>) -> Self {
-        Self::new(ValidationSeverity::Info, message)
-    }
-
-    /// Creates a new warning-level issue.
-    #[must_use]
-    pub fn warning(message: impl Into<String>) -> Self {
-        Self::new(ValidationSeverity::Warning, message)
-    }
-
-    /// Creates a new error-level issue.
-    #[must_use]
-    pub fn error(message: impl Into<String>) -> Self {
-        Self::new(ValidationSeverity::Error, message)
-    }
-
-    /// Sets the field path for this issue.
-    #[must_use]
-    pub fn with_field(mut self, field: impl Into<String>) -> Self {
-        self.field = Some(field.into());
-        self
-    }
-}
-
-impl std::fmt::Display for ValidationIssue {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        if let Some(field) = &self.field {
-            write!(f, "[{}] {}: {}", self.severity, field, self.message)
-        } else {
-            write!(f, "[{}] {}", self.severity, self.message)
-        }
-    }
-}
-
-/// Report containing all validation issues found.
-///
-/// **Note:** This is a placeholder implementation that will be replaced
-/// by the full validation framework in Task 2.5.
-///
-/// # Examples
-///
-/// ```
-/// use airsspec_core::spec::{validate_spec, SpecBuilder};
-///
-/// let spec = SpecBuilder::new()
-///     .title("Valid Spec")
-///     .description("A valid specification")
-///     .content("# Spec\n\nContent here.")
-///     .build()
-///     .unwrap();
-///
-/// let report = validate_spec(&spec);
-/// assert!(report.is_valid());
-/// ```
-#[derive(Debug, Default)]
-pub struct ValidationReport {
-    /// All issues found during validation.
-    issues: Vec<ValidationIssue>,
-}
-
-impl ValidationReport {
-    /// Creates a new empty validation report.
-    #[must_use]
-    pub fn new() -> Self {
-        Self::default()
-    }
-
-    /// Adds an issue to the report.
-    pub fn add_issue(&mut self, issue: ValidationIssue) {
-        self.issues.push(issue);
-    }
-
-    /// Adds an error to the report.
-    pub fn add_error(&mut self, message: impl Into<String>) {
-        self.issues.push(ValidationIssue::error(message));
-    }
-
-    /// Adds a warning to the report.
-    pub fn add_warning(&mut self, message: impl Into<String>) {
-        self.issues.push(ValidationIssue::warning(message));
-    }
-
-    /// Adds an info message to the report.
-    pub fn add_info(&mut self, message: impl Into<String>) {
-        self.issues.push(ValidationIssue::info(message));
-    }
-
-    /// Returns `true` if there are no errors.
-    ///
-    /// Warnings and info messages do not affect validity.
-    #[must_use]
-    pub fn is_valid(&self) -> bool {
-        !self
-            .issues
-            .iter()
-            .any(|i| i.severity == ValidationSeverity::Error)
-    }
-
-    /// Returns `true` if there are no issues at all.
-    #[must_use]
-    pub fn is_empty(&self) -> bool {
-        self.issues.is_empty()
-    }
-
-    /// Returns all issues in the report.
-    #[must_use]
-    pub fn issues(&self) -> &[ValidationIssue] {
-        &self.issues
-    }
-
-    /// Returns only error-level issues.
-    #[must_use]
-    pub fn errors(&self) -> Vec<&ValidationIssue> {
-        self.issues
-            .iter()
-            .filter(|i| i.severity == ValidationSeverity::Error)
-            .collect()
-    }
-
-    /// Returns only warning-level issues.
-    #[must_use]
-    pub fn warnings(&self) -> Vec<&ValidationIssue> {
-        self.issues
-            .iter()
-            .filter(|i| i.severity == ValidationSeverity::Warning)
-            .collect()
-    }
-
-    /// Returns the total number of issues.
-    #[must_use]
-    pub fn issue_count(&self) -> usize {
-        self.issues.len()
-    }
-
-    /// Returns the number of errors.
-    #[must_use]
-    pub fn error_count(&self) -> usize {
-        self.issues
-            .iter()
-            .filter(|i| i.severity == ValidationSeverity::Error)
-            .count()
-    }
-
-    /// Returns the number of warnings.
-    #[must_use]
-    pub fn warning_count(&self) -> usize {
-        self.issues
-            .iter()
-            .filter(|i| i.severity == ValidationSeverity::Warning)
-            .count()
-    }
-
-    /// Merges another report's issues into this one.
-    pub fn merge(&mut self, other: ValidationReport) {
-        self.issues.extend(other.issues);
-    }
-}
+// Re-export validation types for backward compatibility
+// Also makes them available for use within this module
+pub use crate::validation::{ValidationIssue, ValidationReport, ValidationSeverity};
 
 /// Validates a specification and returns a report of any issues.
 ///
@@ -223,9 +18,6 @@ impl ValidationReport {
 /// - Title length is reasonable (< 200 chars)
 /// - Description is recommended (warning if empty)
 /// - Content is recommended (warning if empty)
-///
-/// **Note:** This is a basic implementation. The full validation framework
-/// (Task 2.5) will provide more comprehensive validation rules.
 ///
 /// # Arguments
 ///
@@ -330,7 +122,7 @@ fn validate_dependencies(spec: &Spec, report: &mut ValidationReport) {
     let dependencies = spec.dependencies();
 
     // Check for duplicate dependencies
-    let mut seen_ids = std::collections::HashSet::new();
+    let mut seen_ids = HashSet::new();
     for (idx, dep) in dependencies.iter().enumerate() {
         let id_str = dep.spec_id.as_str();
         if !seen_ids.insert(id_str) {
@@ -366,19 +158,19 @@ mod tests {
     #[test]
     fn test_validation_issue_constructors() {
         let info = ValidationIssue::info("Info message");
-        assert_eq!(info.severity, ValidationSeverity::Info);
+        assert_eq!(info.severity(), ValidationSeverity::Info);
 
         let warning = ValidationIssue::warning("Warning message");
-        assert_eq!(warning.severity, ValidationSeverity::Warning);
+        assert_eq!(warning.severity(), ValidationSeverity::Warning);
 
         let error = ValidationIssue::error("Error message");
-        assert_eq!(error.severity, ValidationSeverity::Error);
+        assert_eq!(error.severity(), ValidationSeverity::Error);
     }
 
     #[test]
     fn test_validation_issue_with_field() {
         let issue = ValidationIssue::error("Test").with_field("test.field");
-        assert_eq!(issue.field, Some("test.field".to_string()));
+        assert_eq!(issue.field(), Some("test.field"));
     }
 
     #[test]
@@ -462,7 +254,7 @@ mod tests {
         assert_eq!(report.warning_count(), 1);
         assert!(
             report.warnings()[0]
-                .message
+                .message()
                 .contains("Description is empty")
         );
     }
@@ -478,7 +270,7 @@ mod tests {
         let report = validate_spec(&spec);
         assert!(report.is_valid()); // Warning only
         assert_eq!(report.warning_count(), 1);
-        assert!(report.warnings()[0].message.contains("Content is empty"));
+        assert!(report.warnings()[0].message().contains("Content is empty"));
     }
 
     #[test]
@@ -493,7 +285,7 @@ mod tests {
 
         let report = validate_spec(&spec);
         assert!(report.is_valid()); // Warning only
-        assert!(report.warnings().iter().any(|w| w.message.contains("long")));
+        assert!(report.warnings().iter().any(|w| w.message().contains("long")));
     }
 
     #[test]
@@ -509,7 +301,7 @@ mod tests {
             report
                 .warnings()
                 .iter()
-                .any(|w| w.message.contains("whitespace"))
+                .any(|w| w.message().contains("whitespace"))
         );
     }
 
@@ -523,7 +315,7 @@ mod tests {
 
         let report = validate_spec(&spec);
         assert!(!report.is_valid()); // Error
-        assert!(report.errors().iter().any(|e| e.message.contains("itself")));
+        assert!(report.errors().iter().any(|e| e.message().contains("itself")));
     }
 
     #[test]
@@ -541,7 +333,7 @@ mod tests {
             report
                 .warnings()
                 .iter()
-                .any(|w| w.message.contains("Duplicate"))
+                .any(|w| w.message().contains("Duplicate"))
         );
     }
 

@@ -20,15 +20,12 @@
 //! - [`plan`] - Plan domain (`Plan`, `PlanStep`, `PlanBuilder`, `StepStatus`, `Complexity`)
 //! - [`shared`] - Cross-cutting types (`LifecycleState`, `Phase`)
 //! - [`state`] - State machine and workflow tracking (`StateMachine`, `WorkflowState`, `BuildProgress`)
+//! - [`workspace`] - Workspace domain (`ProjectConfig`, `WorkspaceInfo`, `WorkspaceProvider`)
 //!
 //! ### Framework Modules
 //!
 //! - [`validation`] - Validation framework (`ValidationReport`, `ValidationIssue`, `Validator` trait)
-//!
-//! ### Future Modules (Phase 2)
-//!
-//! - `workspace/` - Workspace domain (`ProjectConfig`, `WorkspaceProvider`)
-//! - `utils/` - Pure utilities
+//! - [`utils`] - Pure utilities (`slug`, `id` generation)
 //!
 //! ## Dependencies
 //!
@@ -115,7 +112,9 @@ pub mod plan;
 pub mod shared;
 pub mod spec;
 pub mod state;
+pub mod utils;
 pub mod validation;
+pub mod workspace;
 
 // Convenience re-exports for common types
 pub use plan::{
@@ -133,4 +132,10 @@ pub use state::{BuildProgress, StateError, StateMachine, WorkflowState};
 pub use validation::{
     ValidationContext, ValidationContextBuilder, ValidationIssue, ValidationReport,
     ValidationSeverity, Validator, ValidatorExt,
+};
+
+// Workspace re-exports
+pub use workspace::{
+    ProjectConfig, ProjectInfo, SpecDefaults, WorkspaceError, WorkspaceInfo, WorkspaceProvider,
+    WorkspaceProviderExt,
 };

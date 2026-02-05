@@ -99,7 +99,7 @@ mod tests {
 
     #[test]
     fn test_error_is_std_error() {
-        let err = SpecError::InvalidId("test".to_string());
-        let _: &dyn std::error::Error = &err;
+        fn assert_std_error<T: std::error::Error>() {}
+        assert_std_error::<SpecError>();
     }
 }

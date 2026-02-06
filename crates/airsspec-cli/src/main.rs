@@ -1,37 +1,52 @@
 //! # airsspec-cli
 //!
-//! Binary entry point for `AirsSpec` - a lightweight, MCP-first spec-driven development framework.
+//! Binary entry point for `AirsSpec` -- a lightweight, MCP-first spec-driven
+//! development framework.
 //!
-//! This is a thin orchestration layer that delegates all business logic to library crates.
-//!
-//! ## Architecture
-//!
-//! Per [ADR-002: 4-Crate Structure](../../.memory-bank/sub-projects/airsspec/docs/adr/adr-002-4-crate-structure.md),
-//! this crate:
+//! This is a thin orchestration layer that delegates all business logic to
+//! library crates. Per ADR-002 (4-Crate Structure), the CLI crate:
 //!
 //! - Parses CLI arguments using `clap`
 //! - Routes commands to appropriate library implementations
-//! - Contains NO business logic (all logic lives in libraries)
-//! - Uses `mimalloc` allocator for better performance
+//! - Contains NO business logic (all logic lives in library crates)
 //!
-//! ## Commands (Future)
+//! ## Commands
 //!
-//! - `airsspec init` - Initialize workspace (TUI wizard)
-//! - `airsspec mcp` - Start MCP server (stdio transport)
-//! - `airsspec validate` - Run validation with TUI reporter
+//! | Command              | Description                              |
+//! |----------------------|------------------------------------------|
+//! | `airsspec init`      | Initialize workspace (TUI wizard)        |
+//! | `airsspec mcp`       | Start MCP server (stdio transport)       |
+//! | `airsspec validate`  | Run validation with TUI reporter         |
 //!
-//! ## Global Allocator
+//! ## Error Handling
 //!
-//! Uses `mimalloc` for improved memory allocation performance.
+//! Command handlers return `anyhow::Result<()>`. Errors are caught in `main()`,
+//! printed to stderr, and mapped to a non-zero exit code per Unix conventions.
 
-use std::alloc::System;
+mod cli;
+mod commands;
 
-#[global_allocator]
-static GLOBAL: System = System;
+use std::process::ExitCode;
 
-fn main() {
-    // CLI entry point - thin orchestration layer
-    // Command implementations will be added in Phase 3
-    println!("AirsSpec v0.1.0");
-    println!("Phase 1: Project Setup Complete");
+use clap::Parser;
+
+use cli::{Cli, Commands};
+
+#[tokio::main]
+async fn main() -> ExitCode {
+    let cli = Cli::parse();
+
+    let result = match cli.command {
+        Commands::Init => commands::init::run().await,
+        Commands::Mcp { debug } => commands::mcp::run(debug).await,
+        Commands::Validate => commands::validate::run().await,
+    };
+
+    match result {
+        Ok(()) => ExitCode::SUCCESS,
+        Err(err) => {
+            eprintln!("Error: {err:?}");
+            ExitCode::FAILURE
+        }
+    }
 }

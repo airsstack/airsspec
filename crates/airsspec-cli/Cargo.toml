@@ -11,13 +11,17 @@ readme = "README.md"
 keywords = ["cli", "spec", "workflow", "mcp"]
 categories = ["development-tools", "command-line-utilities"]
 
+[[bin]]
+name = "airsspec"
+path = "src/main.rs"
+
 [dependencies]
 airsspec-core = { workspace = true }
 airsspec-mcp = { workspace = true }
 airsspec-tui = { workspace = true }
 clap = { workspace = true }
 tokio = { workspace = true }
-mimalloc = { workspace = true }
+anyhow = { workspace = true }
 
 [lints]
 workspace = true

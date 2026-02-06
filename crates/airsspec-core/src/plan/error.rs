@@ -81,7 +81,10 @@ mod tests {
 
     #[test]
     fn test_step_index_out_of_bounds_error() {
-        let err = PlanError::StepIndexOutOfBounds { index: 10, total: 5 };
+        let err = PlanError::StepIndexOutOfBounds {
+            index: 10,
+            total: 5,
+        };
         let msg = err.to_string();
         assert!(msg.contains("step index 10"));
         assert!(msg.contains("5 steps"));

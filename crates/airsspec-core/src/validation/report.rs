@@ -217,10 +217,7 @@ mod tests {
 
     #[test]
     fn test_from_issues() {
-        let issues = vec![
-            ValidationIssue::error("E1"),
-            ValidationIssue::warning("W1"),
-        ];
+        let issues = vec![ValidationIssue::error("E1"), ValidationIssue::warning("W1")];
         let report = ValidationReport::from_issues(issues);
         assert_eq!(report.issue_count(), 2);
     }

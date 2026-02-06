@@ -285,7 +285,12 @@ mod tests {
 
         let report = validate_spec(&spec);
         assert!(report.is_valid()); // Warning only
-        assert!(report.warnings().iter().any(|w| w.message().contains("long")));
+        assert!(
+            report
+                .warnings()
+                .iter()
+                .any(|w| w.message().contains("long"))
+        );
     }
 
     #[test]
@@ -315,7 +320,12 @@ mod tests {
 
         let report = validate_spec(&spec);
         assert!(!report.is_valid()); // Error
-        assert!(report.errors().iter().any(|e| e.message().contains("itself")));
+        assert!(
+            report
+                .errors()
+                .iter()
+                .any(|e| e.message().contains("itself"))
+        );
     }
 
     #[test]

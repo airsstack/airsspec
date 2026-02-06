@@ -74,4 +74,4 @@ pub use error::PlanError;
 pub use step::{Complexity, PlanStep, StepBuilder, StepStatus};
 pub use storage::{PlanStorage, PlanStorageExt};
 pub use types::Plan;
-pub use validator::{validate_plan, ValidationIssue, ValidationReport, ValidationSeverity};
+pub use validator::{ValidationIssue, ValidationReport, ValidationSeverity, validate_plan};

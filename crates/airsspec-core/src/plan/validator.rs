@@ -274,7 +274,12 @@ mod tests {
 
         let report = validate_plan(&plan);
         assert!(report.is_valid()); // Warning only
-        assert!(report.warnings().iter().any(|w| w.message().contains("long")));
+        assert!(
+            report
+                .warnings()
+                .iter()
+                .any(|w| w.message().contains("long"))
+        );
     }
 
     #[test]

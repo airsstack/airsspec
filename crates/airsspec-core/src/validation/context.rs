@@ -85,9 +85,7 @@ impl ValidationContextBuilder {
     #[must_use]
     pub fn build(self) -> ValidationContext {
         ValidationContext {
-            workspace_path: self
-                .workspace_path
-                .expect("workspace_path is required"),
+            workspace_path: self.workspace_path.expect("workspace_path is required"),
         }
     }
 }

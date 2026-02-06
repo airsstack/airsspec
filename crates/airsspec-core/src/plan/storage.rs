@@ -202,10 +202,7 @@ mod tests {
 
         fn list_plans(&self) -> impl Future<Output = Result<Vec<SpecId>, PlanError>> + Send {
             let plans = self.plans.lock().unwrap();
-            let ids: Vec<SpecId> = plans
-                .keys()
-                .filter_map(|k| SpecId::parse(k).ok())
-                .collect();
+            let ids: Vec<SpecId> = plans.keys().filter_map(|k| SpecId::parse(k).ok()).collect();
             async move { Ok(ids) }
         }
     }

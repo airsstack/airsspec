@@ -111,7 +111,10 @@ fn test_plan_requires_at_least_one_step() {
     let spec_id = SpecId::new(1_737_734_400, "test-spec");
 
     // PlanBuilder requires at least one step
-    let result = PlanBuilder::new().spec_id(spec_id).approach("Approach").build();
+    let result = PlanBuilder::new()
+        .spec_id(spec_id)
+        .approach("Approach")
+        .build();
 
     assert!(result.is_err());
 }

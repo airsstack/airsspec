@@ -165,9 +165,6 @@ mod tests {
     fn test_workspace_info_paths_with_relative_root() {
         let info = WorkspaceInfo::new(PathBuf::from("./relative/path"), sample_config());
         assert_eq!(info.root(), Path::new("./relative/path"));
-        assert_eq!(
-            info.airsspec_dir(),
-            Path::new("./relative/path/.airsspec")
-        );
+        assert_eq!(info.airsspec_dir(), Path::new("./relative/path/.airsspec"));
     }
 }

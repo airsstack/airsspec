@@ -3,8 +3,8 @@
 //! This is a standalone integration test crate that tests
 //! the validation module's public API and cross-module interactions.
 
-use airsspec_core::plan::{validate_plan, PlanBuilder, PlanStep};
-use airsspec_core::spec::{validate_spec, Category, SpecBuilder, SpecId};
+use airsspec_core::plan::{PlanBuilder, PlanStep, validate_plan};
+use airsspec_core::spec::{Category, SpecBuilder, SpecId, validate_spec};
 use airsspec_core::validation::{
     ValidationIssue, ValidationReport, ValidationSeverity, Validator, ValidatorExt,
 };
@@ -257,8 +257,10 @@ fn test_chained_validators() {
     }
 
     // Test valid input
-    let validators: Vec<Box<dyn Validator<String>>> =
-        vec![Box::new(NonEmptyValidator), Box::new(MaxLengthValidator(10))];
+    let validators: Vec<Box<dyn Validator<String>>> = vec![
+        Box::new(NonEmptyValidator),
+        Box::new(MaxLengthValidator(10)),
+    ];
 
     let mut report = ValidationReport::new();
     for v in &validators {

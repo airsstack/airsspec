@@ -424,11 +424,7 @@ mod tests {
     // StepBuilder tests
     #[test]
     fn test_step_builder_minimal() {
-        let step = StepBuilder::new()
-            .index(0)
-            .title("Test")
-            .build()
-            .unwrap();
+        let step = StepBuilder::new().index(0).title("Test").build().unwrap();
 
         assert_eq!(step.index(), 0);
         assert_eq!(step.title(), "Test");

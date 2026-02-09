@@ -20,7 +20,7 @@
 /// - Spec files cannot be read or parsed
 /// - The TUI reporter encounters a terminal I/O failure
 // Intentionally async: validation may use async I/O in Phase 4.
-#[allow(
+#[expect(
     clippy::unused_async,
     reason = "intentionally async for Phase 4 validation engine integration"
 )]

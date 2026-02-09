@@ -48,6 +48,9 @@ uuid = { version = "1", features = ["v4"] }
 chrono = { version = "0.4", features = ["serde"] }
 slug = "0.1"
 
+# Testing
+tempfile = "3"
+
 # Allocator (for CLI binary)
 mimalloc = "0.1"
 

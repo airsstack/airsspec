@@ -71,21 +71,24 @@ fn test_version_output() {
 }
 
 #[test]
-fn test_init_command() {
+fn test_init_command_no_tty() {
+    // `airsspec init` requires an interactive terminal for the TUI wizard.
+    // When run without a TTY (as in CI / test subprocess), the wizard fails
+    // to initialize the terminal, producing a non-zero exit code.
     let output = airsspec_cmd()
         .arg("init")
         .output()
         .expect("failed to execute airsspec init");
 
     assert!(
-        output.status.success(),
-        "airsspec init should exit with code 0"
+        !output.status.success(),
+        "airsspec init without a TTY should exit with non-zero code"
     );
 
-    let stdout = String::from_utf8_lossy(&output.stdout);
+    let stderr = String::from_utf8_lossy(&output.stderr);
     assert!(
-        stdout.contains("AirsSpec Init"),
-        "init output should contain 'AirsSpec Init'"
+        stderr.contains("TUI wizard failed"),
+        "error output should mention TUI wizard failure, got: {stderr}"
     );
 }
 

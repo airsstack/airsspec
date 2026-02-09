@@ -24,7 +24,7 @@
 /// - The MCP server fails to bind to stdio transport
 /// - The server encounters a fatal runtime error
 // Intentionally async: MCP server will use async I/O in Phase 5.
-#[allow(
+#[expect(
     clippy::unused_async,
     reason = "intentionally async for Phase 5 MCP server integration"
 )]

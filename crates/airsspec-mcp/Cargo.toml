@@ -13,8 +13,7 @@ categories = ["development-tools"]
 
 [dependencies]
 airsspec-core = { workspace = true }
-# TODO(Phase 5): Uncomment when ready to implement MCP server
-# airsprotocols-mcp = { workspace = true }
+airsprotocols-mcp = { workspace = true }
 tokio = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }

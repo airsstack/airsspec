@@ -50,7 +50,7 @@ These are final decisions - do not re-debate:
 4. **Error Handling**: Permissive - collect all errors, report together
 5. **No `dyn` trait objects**: Use generics for static dispatch
 6. **No `unsafe` code**: Unless absolutely necessary with documentation
-7. **MCP Library**: `airsprotocols-mcp` (deferred to Phase 5 - currently commented out)
+7. **MCP Library**: `airsprotocols-mcp`
 
 ## Rust Patterns
 
@@ -169,7 +169,7 @@ All dependencies managed at workspace level in root `Cargo.toml`. Key dependenci
 - `thiserror`, `anyhow` (error handling)
 - `tracing` (logging)
 
-Minimum Rust version: 1.85, Edition 2024.
+Minimum Rust version: 1.88, Edition 2024.
 
 ## Guidelines Reference
 

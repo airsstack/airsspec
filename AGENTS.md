@@ -108,7 +108,7 @@ These decisions are final. Do not re-debate unless explicitly requested:
 5. **State Module Name**: `state/` (not `state_machine/`)
 6. **Error Handling**: Permissive - collect all errors, report together
 7. **Logging**: Daily rotation + per-session JSONL files in `.airsspec/logs/`
-8. **MCP Library**: `airsprotocols-mcp` v1.0.0-rc.1
+8. **MCP Library**: `airsprotocols-mcp` v1.0.0-rc.2
 
 ---
 

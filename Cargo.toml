@@ -13,7 +13,7 @@ edition = "2024"
 authors = ["AirS Stack <hello@airs.dev>"]
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/airsstack/airsspec"
-rust-version = "1.85"
+rust-version = "1.88"
 
 [workspace.dependencies]
 # Internal crates
@@ -21,9 +21,7 @@ airsspec-core = { path = "crates/airsspec-core" }
 airsspec-mcp = { path = "crates/airsspec-mcp" }
 airsspec-tui = { path = "crates/airsspec-tui" }
 
-# MCP Protocol - DEFERRED to Phase 5
-# TODO(Phase 5): Uncomment when implementing MCP server (library has compilation errors with current toolchain)
-# airsprotocols-mcp = "1.0.0-rc.1"
+airsprotocols-mcp = "1.0.0-rc.2"
 
 # Async runtime
 tokio = { version = "1", features = ["full"] }
@@ -40,7 +38,7 @@ ratatui = "0.29"
 crossterm = "0.28"
 
 # Utilities
-thiserror = "1"
+thiserror = "2"
 anyhow = "1"
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["json"] }

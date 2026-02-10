@@ -25,12 +25,7 @@
 //! - `resources/` - Resource providers (`airsspec:///` URIs)
 //! - `prompts/` - Prompt template providers
 //! - `logging/` - JSONL session logging
-//!
-//! ## MCP Protocol Note
-//!
-//! The `airsprotocols-mcp` library dependency is deferred to Phase 5
-//! due to compilation issues with the current Rust toolchain. This does
-//! not block Phases 1-4 (workspace, domain, CLI, validation).
+
 
 pub mod storage;
 

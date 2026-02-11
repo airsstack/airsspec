@@ -12,7 +12,15 @@
 //! - [`ValidationIssue`] - A single validation issue with severity and message
 //! - [`ValidationReport`] - Collection of issues with merge support
 //! - [`Validator`] - Generic trait for implementing validators
-//! - [`ValidationContext`] - Context for workspace-level validation
+//! - [`ValidationContext`] - Generic context for workspace-level validation
+//! - [`ValidatableSpec`] / [`ValidatablePlan`] - Trait abstractions for DIP
+//!
+//! ## Dependency Inversion Principle
+//!
+//! The validation framework defines trait abstractions ([`ValidatableSpec`],
+//! [`ValidatablePlan`]) that domain types implement. This ensures the
+//! framework module never depends on concrete domain types. Validators
+//! use these traits via generic bounds for static dispatch (no `dyn`).
 //!
 //! ## Permissive Validation (ADR-005)
 //!
@@ -51,10 +59,19 @@ mod context;
 mod issue;
 mod report;
 mod severity;
+pub(crate) mod traits;
 mod validator;
+pub(crate) mod validators;
 
 pub use context::{ValidationContext, ValidationContextBuilder};
 pub use issue::ValidationIssue;
 pub use report::ValidationReport;
 pub use severity::ValidationSeverity;
+pub use traits::{ValidatablePlan, ValidatableSpec};
 pub use validator::{Validator, ValidatorExt};
+
+// Workspace validator re-exports for convenience
+pub use validators::{
+    DependencyValidator, DirectoryStructureValidator, SpecContentValidator,
+    StateTransitionValidator,
+};

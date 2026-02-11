@@ -67,6 +67,7 @@ mod error;
 mod id;
 mod storage;
 mod types;
+mod validatable;
 mod validator;
 
 pub use builder::SpecBuilder;

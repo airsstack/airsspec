@@ -26,7 +26,6 @@
 //! - `prompts/` - Prompt template providers
 //! - `logging/` - JSONL session logging
 
-
 pub mod storage;
 
 // Convenience re-exports

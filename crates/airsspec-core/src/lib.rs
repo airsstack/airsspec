@@ -130,8 +130,10 @@ pub use state::{BuildProgress, StateError, StateMachine, WorkflowState};
 
 // Validation framework re-exports
 pub use validation::{
-    ValidationContext, ValidationContextBuilder, ValidationIssue, ValidationReport,
-    ValidationSeverity, Validator, ValidatorExt,
+    DependencyValidator, DirectoryStructureValidator, SpecContentValidator,
+    StateTransitionValidator, ValidatablePlan, ValidatableSpec, ValidationContext,
+    ValidationContextBuilder, ValidationIssue, ValidationReport, ValidationSeverity, Validator,
+    ValidatorExt,
 };
 
 // Workspace re-exports

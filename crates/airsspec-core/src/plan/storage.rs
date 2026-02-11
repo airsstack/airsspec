@@ -222,11 +222,9 @@ mod tests {
         let mut cx = Context::from_waker(&waker);
         let mut f = pin!(f);
 
-        loop {
-            match f.as_mut().poll(&mut cx) {
-                Poll::Ready(result) => return result,
-                Poll::Pending => {}
-            }
+        match f.as_mut().poll(&mut cx) {
+            Poll::Ready(result) => result,
+            Poll::Pending => panic!("block_on: unexpected Pending from immediately-ready future"),
         }
     }
 

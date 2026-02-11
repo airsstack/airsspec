@@ -29,4 +29,6 @@
 pub mod storage;
 
 // Convenience re-exports
+pub use storage::FileSystemPlanStorage;
+pub use storage::FileSystemSpecStorage;
 pub use storage::FileSystemWorkspaceProvider;

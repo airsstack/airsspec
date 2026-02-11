@@ -42,6 +42,16 @@ pub enum PlanError {
         /// The total number of steps.
         total: usize,
     },
+
+    /// I/O error (stored as string since `io::Error` doesn't impl Clone/Eq).
+    #[error("I/O error: {0}")]
+    Io(String),
+}
+
+impl From<std::io::Error> for PlanError {
+    fn from(err: std::io::Error) -> Self {
+        Self::Io(err.to_string())
+    }
 }
 
 #[cfg(test)]
@@ -102,6 +112,22 @@ mod tests {
         let err = PlanError::InvalidFormat("test".to_string());
         let debug = format!("{err:?}");
         assert!(debug.contains("InvalidFormat"));
+    }
+
+    #[test]
+    fn test_io_error() {
+        let err = PlanError::Io("disk full".to_string());
+        let msg = err.to_string();
+        assert!(msg.contains("I/O error"));
+        assert!(msg.contains("disk full"));
+    }
+
+    #[test]
+    fn test_io_error_conversion() {
+        let io_err = std::io::Error::new(std::io::ErrorKind::PermissionDenied, "permission denied");
+        let plan_err: PlanError = io_err.into();
+        assert!(matches!(plan_err, PlanError::Io(_)));
+        assert!(plan_err.to_string().contains("permission denied"));
     }
 
     #[test]

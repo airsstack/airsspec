@@ -9,7 +9,13 @@
 //! ## Implementations
 //!
 //! - [`FileSystemWorkspaceProvider`] - Discovers and initializes workspaces on the filesystem
+//! - [`FileSystemSpecStorage`] - Reads and writes spec YAML files
+//! - [`FileSystemPlanStorage`] - Reads and writes plan YAML files
 
+mod plan;
+mod spec;
 mod workspace;
 
+pub use plan::FileSystemPlanStorage;
+pub use spec::FileSystemSpecStorage;
 pub use workspace::FileSystemWorkspaceProvider;

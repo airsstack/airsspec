@@ -37,6 +37,16 @@ pub enum SpecError {
     /// A duplicate spec already exists.
     #[error("spec already exists: {0}")]
     AlreadyExists(String),
+
+    /// I/O error (stored as string since `io::Error` doesn't impl Clone/Eq).
+    #[error("I/O error: {0}")]
+    Io(String),
+}
+
+impl From<std::io::Error> for SpecError {
+    fn from(err: std::io::Error) -> Self {
+        Self::Io(err.to_string())
+    }
 }
 
 #[cfg(test)]
@@ -95,6 +105,22 @@ mod tests {
         let err = SpecError::InvalidId("test".to_string());
         let debug = format!("{err:?}");
         assert!(debug.contains("InvalidId"));
+    }
+
+    #[test]
+    fn test_io_error() {
+        let err = SpecError::Io("permission denied".to_string());
+        let msg = err.to_string();
+        assert!(msg.contains("I/O error"));
+        assert!(msg.contains("permission denied"));
+    }
+
+    #[test]
+    fn test_io_error_conversion() {
+        let io_err = std::io::Error::new(std::io::ErrorKind::PermissionDenied, "permission denied");
+        let spec_err: SpecError = io_err.into();
+        assert!(matches!(spec_err, SpecError::Io(_)));
+        assert!(spec_err.to_string().contains("permission denied"));
     }
 
     #[test]

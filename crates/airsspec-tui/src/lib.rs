@@ -22,6 +22,7 @@
 //! - [`theme`] - Color palette and style definitions
 //! - [`widgets`] - Reusable input components ([`widgets::TextInput`])
 //! - [`wizard`] - Multi-step wizard framework and init wizard
+//! - [`reporter`] - Styled terminal validation report output
 //!
 //! ## Quick Start
 //!
@@ -41,8 +42,10 @@
 //! - `ratatui` - Terminal UI framework (v0.29)
 //! - `crossterm` - Terminal manipulation (v0.28)
 
+pub mod reporter;
 pub mod theme;
 pub mod widgets;
 pub mod wizard;
 
+pub use reporter::render_validation_report;
 pub use wizard::{InitWizardResult, run_init_wizard};

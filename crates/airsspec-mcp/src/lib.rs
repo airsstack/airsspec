@@ -17,6 +17,7 @@
 //! ## Modules
 //!
 //! - [`storage`] - Filesystem implementations of core storage traits
+//! - [`validation`] - Workspace validation orchestration
 //!
 //! ## Future Modules (Phase 5+)
 //!
@@ -27,8 +28,10 @@
 //! - `logging/` - JSONL session logging
 
 pub mod storage;
+pub mod validation;
 
 // Convenience re-exports
 pub use storage::FileSystemPlanStorage;
 pub use storage::FileSystemSpecStorage;
 pub use storage::FileSystemWorkspaceProvider;
+pub use validation::validate_workspace;

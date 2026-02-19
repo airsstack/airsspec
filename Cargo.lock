@@ -58,6 +58,7 @@ dependencies = [
  "airsspec-tui",
  "anyhow",
  "clap",
+ "tempfile",
  "tokio",
 ]
 

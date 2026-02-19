@@ -10,6 +10,9 @@
 //! Each test spawns a new process via `std::process::Command` to ensure
 //! the binary behaves correctly as a standalone executable.
 
+// Layer 1: Standard library
+use std::fs;
+use std::path::Path;
 use std::process::Command;
 
 /// Create a `Command` pointing to the compiled `airsspec` binary.
@@ -130,22 +133,109 @@ fn test_mcp_debug_flag() {
     );
 }
 
+/// Creates a minimal valid `.airsspec/` workspace structure in `dir`.
+fn create_valid_workspace(dir: &Path) {
+    let airsspec = dir.join(".airsspec");
+    fs::create_dir_all(airsspec.join("specs")).unwrap();
+    fs::create_dir_all(airsspec.join("logs")).unwrap();
+    fs::write(
+        airsspec.join("config.toml"),
+        "[project]\nname = \"test\"\ndescription = \"test project\"\n",
+    )
+    .unwrap();
+}
+
+/// Creates a valid spec YAML file in the specs directory.
+///
+/// Writes raw YAML matching the `serde_yaml`-serialized `Spec` structure.
+/// This avoids depending on `airsspec-mcp` types in subprocess integration
+/// tests. The file is named following the `{spec-id}.yaml` convention.
+fn create_test_spec_yaml(specs_dir: &Path) {
+    let spec_yaml = "\
+id: 1000000-test-feature
+metadata:
+  title: Test Feature
+  description: A test feature for validation
+  category: feature
+  dependencies: []
+  created_at: '2026-01-01T00:00:00Z'
+  updated_at: '2026-01-01T00:00:00Z'
+content: '# Test Feature\n\nThis is test content.'
+";
+    fs::write(specs_dir.join("1000000-test-feature.yaml"), spec_yaml).unwrap();
+}
+
 #[test]
-fn test_validate_command() {
+fn test_validate_valid_workspace() {
+    let temp = tempfile::tempdir().unwrap();
+    create_valid_workspace(temp.path());
+    create_test_spec_yaml(&temp.path().join(".airsspec/specs"));
+
     let output = airsspec_cmd()
         .arg("validate")
+        .current_dir(temp.path())
         .output()
         .expect("failed to execute airsspec validate");
 
     assert!(
         output.status.success(),
-        "airsspec validate should exit with code 0"
+        "airsspec validate in valid workspace should exit with code 0, stderr: {}",
+        String::from_utf8_lossy(&output.stderr),
+    );
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    // With a spec present and no issues, the reporter shows "No issues found"
+    // (empty report) or the status line with "PASSED"
+    assert!(
+        stdout.contains("No issues found") || stdout.contains("PASSED"),
+        "output should indicate validation passed, got: {stdout}",
+    );
+}
+
+#[test]
+fn test_validate_no_workspace() {
+    let temp = tempfile::tempdir().unwrap();
+
+    let output = airsspec_cmd()
+        .arg("validate")
+        .current_dir(temp.path())
+        .output()
+        .expect("failed to execute airsspec validate");
+
+    assert!(
+        !output.status.success(),
+        "airsspec validate outside workspace should exit with non-zero code",
+    );
+
+    let stderr = String::from_utf8_lossy(&output.stderr);
+    assert!(
+        stderr.contains("validation failed"),
+        "stderr should mention validation failure, got: {stderr}",
+    );
+}
+
+#[test]
+fn test_validate_empty_workspace() {
+    let temp = tempfile::tempdir().unwrap();
+    create_valid_workspace(temp.path());
+    // No specs added -- workspace is valid but empty
+
+    let output = airsspec_cmd()
+        .arg("validate")
+        .current_dir(temp.path())
+        .output()
+        .expect("failed to execute airsspec validate");
+
+    assert!(
+        output.status.success(),
+        "airsspec validate in empty workspace should exit with code 0, stderr: {}",
+        String::from_utf8_lossy(&output.stderr),
     );
 
     let stdout = String::from_utf8_lossy(&output.stdout);
     assert!(
-        stdout.contains("AirsSpec Validate"),
-        "validate output should contain 'AirsSpec Validate'"
+        stdout.contains("No issues found"),
+        "empty workspace should show 'No issues found', got: {stdout}",
     );
 }
 

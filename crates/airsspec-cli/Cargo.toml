@@ -23,5 +23,8 @@ clap = { workspace = true }
 tokio = { workspace = true }
 anyhow = { workspace = true }
 
+[dev-dependencies]
+tempfile = { workspace = true }
+
 [lints]
 workspace = true

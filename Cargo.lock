@@ -80,12 +80,16 @@ version = "0.1.0"
 dependencies = [
  "airsprotocols-mcp",
  "airsspec-core",
+ "async-trait",
  "serde",
  "serde_json",
  "serde_yaml",
  "tempfile",
+ "thiserror 2.0.18",
  "tokio",
  "toml",
+ "tracing",
+ "uuid",
 ]
 
 [[package]]
